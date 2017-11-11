@@ -266,11 +266,11 @@ public class ClienteDAO {
                 cliente.setEmail(rs.getString("email"));
                 cliente.setTelefone(rs.getString("telefone"));
                 achou = true;
-                
+
                 lista.add(cliente);
             }
-            
-            if(!achou){
+
+            if (!achou) {
                 JOptionPane.showMessageDialog(null, "Nenhum cliente cadastrado", "PTQX Locadora",
                         JOptionPane.WARNING_MESSAGE);
             }
@@ -283,4 +283,49 @@ public class ClienteDAO {
         return lista;
     }
 
+    public String mostrarNomeCliente(int idCliente) {
+        String nomeCliente = "";
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = con.prepareStatement("SELECT nome FROM cliente WHERE idCliente = ?");
+            stmt.setInt(1, idCliente);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                nomeCliente = rs.getString("nome");
+            }
+        } catch (SQLException ex) {
+            System.err.println("ClienteDAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+
+        return nomeCliente;
+    }
+
+    public void excluirCliente(int idCliente) {
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = con.prepareStatement("DELETE FROM cliente WHERE idCliente = ?");
+            stmt.setInt(1, idCliente);
+            
+            if (stmt.executeUpdate() > 0) {
+                JOptionPane.showMessageDialog(null, "Cliente deletado com sucesso", "PTQX Locadora",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao tentar excluir o cliente, tente novamente.",
+                        "PTQX Locadora",JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("ClienteDAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt);
+        }
+    }
 }

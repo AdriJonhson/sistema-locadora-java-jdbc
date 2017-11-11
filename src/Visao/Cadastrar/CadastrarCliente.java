@@ -333,6 +333,8 @@ public class CadastrarCliente extends javax.swing.JFrame {
         if (clienteFunc.VerificarCamposCadastro(cliente)) {
 
             dao.cadastrarCliente(cliente);
+            txtCodCliente.setText("");
+            txtCodCliente.setText(dao.getUltimoIdCadastro()+"");
             limparCampos();
 
         } else {
