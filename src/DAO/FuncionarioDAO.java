@@ -64,7 +64,7 @@ public class FuncionarioDAO {
 
     }
 
-    public List<Funcionario> listarComboFuncionario() {
+    public List<Funcionario> listarIdFuncionario() {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;

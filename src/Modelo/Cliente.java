@@ -1,7 +1,8 @@
 package Modelo;
 
 public class Cliente {
-    
+
+    public int id;
     public String nome;
     public String dt_nasc;
     public String rg;
@@ -12,6 +13,14 @@ public class Cliente {
     public String rua;
     public int numero;
     public String cep;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;
@@ -92,8 +101,5 @@ public class Cliente {
     public void setCep(String cep) {
         this.cep = cep;
     }
-    
-    
-    
-    
+
 }

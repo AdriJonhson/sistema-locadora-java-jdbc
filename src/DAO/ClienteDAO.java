@@ -1,10 +1,13 @@
 package DAO;
 
 import Modelo.Cliente;
+import Modelo.Cliente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 public class ClienteDAO {
@@ -41,6 +44,10 @@ public class ClienteDAO {
         }
     }
 
+    
+    
+    
+    
     public int getUltimoIdCadastro(){
         int id = 0;
         
@@ -62,4 +69,37 @@ public class ClienteDAO {
         }
         return id + 1;
     }
+    
+    public List<Cliente> listarIdCliente() {
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        List<Cliente> lista = new ArrayList<>();
+        try {
+            stmt = con.prepareStatement("SELECT idCliente FROM cliente");
+            rs = stmt.executeQuery();
+
+            if (rs != null) {
+                while (rs.next()) {
+
+                    Cliente cliente = new Cliente();
+
+                    cliente.setId(rs.getInt("idCliente"));
+
+                    lista.add(cliente);
+                }
+
+            }
+        } catch (SQLException ex) {
+            System.err.println("ClienteDAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+
+        return lista;
+
+    }
+
+
 }
