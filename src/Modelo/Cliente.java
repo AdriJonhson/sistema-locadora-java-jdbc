@@ -2,17 +2,17 @@ package Modelo;
 
 public class Cliente {
 
-    public int id;
-    public String nome;
-    public String dt_nasc;
-    public String rg;
-    public String cpf;
-    public String email;
-    public String telefone;
-    public String bairro;
-    public String rua;
-    public int numero;
-    public String cep;
+    private int id;
+    private String nome;
+    private String dt_nasc;
+    private String rg;
+    private String cpf;
+    private String email;
+    private String telefone;
+    private String bairro;
+    private String rua;
+    private int numero;
+    private String cep;
 
     public int getId() {
         return id;
@@ -100,6 +100,11 @@ public class Cliente {
 
     public void setCep(String cep) {
         this.cep = cep;
+    }
+    
+    @Override
+    public String toString() {
+        return getId() + "";
     }
 
 }

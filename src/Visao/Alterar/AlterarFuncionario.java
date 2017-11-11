@@ -91,6 +91,10 @@ public class AlterarFuncionario extends javax.swing.JFrame {
 
         jLabel2.setText("Código funcionário");
 
+        btnBuscar.setBackground(new java.awt.Color(0, 102, 255));
+        btnBuscar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/magnifier.png"))); // NOI18N
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

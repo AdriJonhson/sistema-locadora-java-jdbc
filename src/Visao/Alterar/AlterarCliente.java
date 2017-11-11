@@ -5,8 +5,10 @@
  */
 package Visao.Alterar;
 
+import Controller.ClienteFuncoes;
 import DAO.ClienteDAO;
 import Modelo.Cliente;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,7 +21,7 @@ public class AlterarCliente extends javax.swing.JFrame {
      */
     Cliente cliente = new Cliente();
     ClienteDAO dao = new ClienteDAO();
-    
+
     public AlterarCliente() {
         initComponents();
         atualizarComboBox();
@@ -41,7 +43,7 @@ public class AlterarCliente extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         cbIdCliente = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -130,7 +132,16 @@ public class AlterarCliente extends javax.swing.JFrame {
 
         jLabel2.setText("Código do Cliente");
 
-        jButton1.setText("Buscar");
+        btnBuscar.setBackground(new java.awt.Color(0, 102, 255));
+        btnBuscar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/magnifier.png"))); // NOI18N
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Nº Cliente");
 
@@ -206,7 +217,7 @@ public class AlterarCliente extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(cbIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jButton1))
+                                        .addComponent(btnBuscar))
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel11)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -270,7 +281,7 @@ public class AlterarCliente extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(cbIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(btnBuscar))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -335,6 +346,32 @@ public class AlterarCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        if (txtNome.isEnabled()) {
+            int numero = 0;
+            String num = txtNumero.getText();
+
+            if (!num.trim().equals("")) {
+                numero = Integer.parseInt(txtNumero.getText());
+            }
+
+            cliente.setId(Integer.parseInt(txtCodCliente.getText()));
+            cliente.setNome(txtNome.getText());
+            cliente.setDt_nasc(txtNascimento.getText());
+            cliente.setRg(txtRg.getText());
+            cliente.setCpf(txtCpf.getText());
+            cliente.setEmail(txtEmail.getText());
+            cliente.setTelefone(txtTelefone.getText());
+            cliente.setBairro(txtBairro.getText());
+            cliente.setRua(txtRua.getText());
+            cliente.setNumero(numero);
+            cliente.setCep(txtCep.getText());
+
+            dao.alterarDadosCliente(cliente);
+        } else {
+            JOptionPane.showMessageDialog(null, "Primeiramente faça a busca do funcionário",
+                    "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+
 
     }//GEN-LAST:event_btnUpdateActionPerformed
 
@@ -354,6 +391,36 @@ public class AlterarCliente extends javax.swing.JFrame {
         txtRua.setEnabled(false);
         txtTelefone.setEnabled(false);
     }//GEN-LAST:event_formWindowOpened
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        txtNome.setEnabled(true);
+        txtBairro.setEnabled(true);
+        txtCep.setEnabled(true);
+        txtNascimento.setEnabled(true);
+        txtEmail.setEnabled(true);
+        txtNumero.setEnabled(true);
+        txtRg.setEnabled(true);
+        txtCpf.setEnabled(true);
+        txtRua.setEnabled(true);
+        txtTelefone.setEnabled(true);
+
+        Cliente c = (Cliente) cbIdCliente.getSelectedItem();
+        int idSelecionado = c.getId();
+        txtCodCliente.setText(idSelecionado + "");
+
+        for (Cliente cliente : dao.resgatarDadosCliente(idSelecionado)) {
+            txtNome.setText(cliente.getNome());
+            txtRg.setText(cliente.getRg());
+            txtCpf.setText(cliente.getCpf());
+            txtTelefone.setText(cliente.getTelefone());
+            txtNascimento.setText(cliente.getDt_nasc());
+            txtRua.setText(cliente.getRua());
+            txtNumero.setText(cliente.getNumero() + "");
+            txtBairro.setText(cliente.getBairro());
+            txtCep.setText(cliente.getCep());
+            txtEmail.setText(cliente.getEmail());
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -391,11 +458,11 @@ public class AlterarCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<Object> cbIdCliente;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -427,6 +494,7 @@ public class AlterarCliente extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     public void limparCampos() {
+        txtCodCliente.setText("");
         txtNome.setText("");
         txtBairro.setText("");
         txtCep.setText("");
@@ -439,9 +507,9 @@ public class AlterarCliente extends javax.swing.JFrame {
         txtTelefone.setText("");
     }
 
-    public void atualizarComboBox(){
-        for(Cliente c: dao.listarIdCliente()){
-            cbIdCliente.addItem(c.getId());
+    public void atualizarComboBox() {
+        for (Cliente c : dao.listarIdCliente()) {
+            cbIdCliente.addItem(c);
         }
     }
 }
