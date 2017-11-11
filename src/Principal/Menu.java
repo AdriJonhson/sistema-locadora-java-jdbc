@@ -2,12 +2,15 @@ package Principal;
 
 import Modelo.Funcionario;
 import Visao.Alterar.AlterarCliente;
+import Visao.Alterar.AlterarFilme;
 import Visao.Alterar.AlterarFuncionario;
 import javax.swing.Box;
 import javax.swing.JOptionPane;
 import Visao.Cadastrar.*;
 import Visao.Consultar.ConsultarCliente;
+import Visao.Consultar.ConsultarFilme;
 import Visao.Excluir.ExcluirCliente;
+import Visao.Excluir.ExcluirFilme;
 
 public class Menu extends javax.swing.JFrame {
 
@@ -150,10 +153,20 @@ public class Menu extends javax.swing.JFrame {
 
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/film_add.png"))); // NOI18N
         jMenuItem3.setText("Filme");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem3);
 
         jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/dvd_add.png"))); // NOI18N
         jMenuItem4.setText("DVD");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem4);
 
         jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/report_add.png"))); // NOI18N
@@ -189,6 +202,11 @@ public class Menu extends javax.swing.JFrame {
 
         jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/film_go.png"))); // NOI18N
         jMenuItem9.setText("Filme");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem9);
 
         jMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/dvd_go.png"))); // NOI18N
@@ -223,6 +241,11 @@ public class Menu extends javax.swing.JFrame {
 
         jMenuItem15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/film_edit.png"))); // NOI18N
         jMenuItem15.setText("Filme");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem15);
 
         jMenuItem16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/dvd_edit.png"))); // NOI18N
@@ -262,6 +285,11 @@ public class Menu extends javax.swing.JFrame {
 
         jMenuItem21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/film_delete.png"))); // NOI18N
         jMenuItem21.setText("Filme");
+        jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem21ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem21);
 
         jMenuItem22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/dvd_delete.png"))); // NOI18N
@@ -352,7 +380,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-       new CadastrarFuncionario().setVisible(true);
+        new CadastrarFuncionario().setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
@@ -360,16 +388,36 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem19ActionPerformed
 
     private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
-       new AlterarCliente().setVisible(true);
+        new AlterarCliente().setVisible(true);
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-      new ConsultarCliente().setVisible(true);
+        new ConsultarCliente().setVisible(true);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
-       new ExcluirCliente().setVisible(true);
+        new ExcluirCliente().setVisible(true);
     }//GEN-LAST:event_jMenuItem20ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        new CadastrarDVD().setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        new CadastrarFilme().setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+       new ConsultarFilme().setVisible(true);
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        new AlterarFilme().setVisible(true);
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
+
+    private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
+        new ExcluirFilme().setVisible(true);
+    }//GEN-LAST:event_jMenuItem21ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
