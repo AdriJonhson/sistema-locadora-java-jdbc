@@ -20,6 +20,7 @@ public class AlterarCliente extends javax.swing.JFrame {
      * Creates new form AlterarCliente
      */
     Cliente cliente = new Cliente();
+    ClienteFuncoes clienteFunc = new ClienteFuncoes();
     ClienteDAO dao = new ClienteDAO();
 
     public AlterarCliente() {
@@ -366,7 +367,14 @@ public class AlterarCliente extends javax.swing.JFrame {
             cliente.setNumero(numero);
             cliente.setCep(txtCep.getText());
 
-            dao.alterarDadosCliente(cliente);
+            if (clienteFunc.VerificarCamposCadastro(cliente)) {
+                JOptionPane.showMessageDialog(null, "Preencha todos os campos", "PTQX Locadora",
+                        JOptionPane.WARNING_MESSAGE);
+            } else {
+                dao.alterarDadosCliente(cliente);
+
+            }
+
         } else {
             JOptionPane.showMessageDialog(null, "Primeiramente faça a busca do funcionário",
                     "Aviso", JOptionPane.WARNING_MESSAGE);

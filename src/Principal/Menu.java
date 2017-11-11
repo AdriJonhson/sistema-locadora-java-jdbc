@@ -1,10 +1,13 @@
 package Principal;
 
 import Modelo.Funcionario;
+import Visao.Alterar.AlterarCliente;
 import Visao.Alterar.AlterarFuncionario;
 import javax.swing.Box;
 import javax.swing.JOptionPane;
 import Visao.Cadastrar.*;
+import Visao.Consultar.ConsultarCliente;
+import Visao.Excluir.ExcluirCliente;
 
 public class Menu extends javax.swing.JFrame {
 
@@ -177,6 +180,11 @@ public class Menu extends javax.swing.JFrame {
 
         jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/user_go.png"))); // NOI18N
         jMenuItem8.setText("Cliente");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem8);
 
         jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/film_go.png"))); // NOI18N
@@ -206,6 +214,11 @@ public class Menu extends javax.swing.JFrame {
 
         jMenuItem14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/user_edit.png"))); // NOI18N
         jMenuItem14.setText("Cliente");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem14);
 
         jMenuItem15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/film_edit.png"))); // NOI18N
@@ -240,6 +253,11 @@ public class Menu extends javax.swing.JFrame {
 
         jMenuItem20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/user_delete.png"))); // NOI18N
         jMenuItem20.setText("Cliente");
+        jMenuItem20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem20ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem20);
 
         jMenuItem21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/film_delete.png"))); // NOI18N
@@ -340,6 +358,18 @@ public class Menu extends javax.swing.JFrame {
     private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
         new AlterarFuncionario().setVisible(true);
     }//GEN-LAST:event_jMenuItem19ActionPerformed
+
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+       new AlterarCliente().setVisible(true);
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+      new ConsultarCliente().setVisible(true);
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
+       new ExcluirCliente().setVisible(true);
+    }//GEN-LAST:event_jMenuItem20ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

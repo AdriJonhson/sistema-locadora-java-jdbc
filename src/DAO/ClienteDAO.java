@@ -168,4 +168,119 @@ public class ClienteDAO {
         }
 
     }
+
+    public List<Cliente> buscaPorId(int id) {
+        List<Cliente> lista = new ArrayList<>();
+        boolean achou = false;
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = con.prepareStatement("SELECT idCliente, nome, rg, cpf, email, telefone FROM cliente WHERE idCliente = ?");
+            stmt.setInt(1, id);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Cliente cliente = new Cliente();
+                cliente.setId(rs.getInt("idCliente"));
+                cliente.setNome(rs.getString("nome"));
+                cliente.setRg(rs.getString("rg"));
+                cliente.setCpf(rs.getString("cpf"));
+                cliente.setEmail(rs.getString("email"));
+                cliente.setTelefone(rs.getString("telefone"));
+                achou = true;
+
+                lista.add(cliente);
+            }
+
+            if (!achou) {
+                JOptionPane.showMessageDialog(null, "Cliente não encontrado", "PTQX Locadora",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            System.err.println("ClienteDAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+
+        return lista;
+    }
+
+    public List<Cliente> buscaPorNome(String nomeCliente) {
+        List<Cliente> lista = new ArrayList<>();
+        boolean achou = false;
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = con.prepareStatement("SELECT idCliente, nome, rg, cpf, email, telefone FROM cliente WHERE nome LIKE ?");
+            stmt.setString(1, "%" + nomeCliente + "%");
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Cliente cliente = new Cliente();
+                cliente.setId(rs.getInt("idCliente"));
+                cliente.setNome(rs.getString("nome"));
+                cliente.setRg(rs.getString("rg"));
+                cliente.setCpf(rs.getString("cpf"));
+                cliente.setEmail(rs.getString("email"));
+                cliente.setTelefone(rs.getString("telefone"));
+                achou = true;
+                lista.add(cliente);
+
+            }
+
+            if (!achou) {
+                JOptionPane.showMessageDialog(null, "Cliente não encontrado", "PTQX Locadora",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("ClienteDAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+
+        return lista;
+    }
+
+    public List<Cliente> mostrarTodosClientes() {
+        List<Cliente> lista = new ArrayList<>();
+        boolean achou = false;
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = con.prepareStatement("SELECT idCliente, nome, rg, cpf, email, telefone FROM cliente ORDER BY nome ASC");
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Cliente cliente = new Cliente();
+                cliente.setId(rs.getInt("idCliente"));
+                cliente.setNome(rs.getString("nome"));
+                cliente.setRg(rs.getString("rg"));
+                cliente.setCpf(rs.getString("cpf"));
+                cliente.setEmail(rs.getString("email"));
+                cliente.setTelefone(rs.getString("telefone"));
+                achou = true;
+                
+                lista.add(cliente);
+            }
+            
+            if(!achou){
+                JOptionPane.showMessageDialog(null, "Nenhum cliente cadastrado", "PTQX Locadora",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            System.err.println("ClienteDAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+
+        return lista;
+    }
+
 }
