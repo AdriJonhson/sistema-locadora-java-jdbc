@@ -3,8 +3,8 @@ package Controller;
 import Modelo.Cliente;
 
 public class ClienteFuncoes {
-    
-    public boolean VerificarCamposCadastro(Cliente cliente){
+
+    public boolean VerificarCamposCadastro(Cliente cliente) {
         boolean chave = false;
         String nome = cliente.getNome();
         String nasc = cliente.getDt_nasc();
@@ -15,13 +15,12 @@ public class ClienteFuncoes {
         String bairro = cliente.getBairro();
         int numero = cliente.getNumero();
         String cep = cliente.getCep();
-        
-        if(!(nome.trim().equals("") || nasc.trim().equals("") || rg.trim().length() < 9 || cpf.trim().length() < 11 ||
-                cpf.trim().equals("") || email.trim().equals("") || telefone.trim().length() < 13 || bairro.trim().equals("") ||
-                numero <= 0 || cep.trim().equals(""))){
-                    chave = true;
+        //VERIFICAR CAMPOS: CPF;RG;TELEFONE;CEP;
+        if (!(nome.trim().equals("") || nasc.trim().equals("") || email.trim().equals("") || bairro.trim().equals("")
+                || numero <= 0)) {
+            chave = true;
         }
-        
+
         return chave;
     }
 }

@@ -6,10 +6,20 @@
 package Visao.Cadastrar;
 
 import Controller.FilmeFuncoes;
+import DAO.CategoriaDAO;
+import DAO.ClassificacaoDAO;
+import DAO.FilmeDAO;
+import Modelo.Categoria;
+import Modelo.Classificacao;
+import Modelo.Filme;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -24,8 +34,16 @@ public class CadastrarFilme extends javax.swing.JFrame {
     /**
      * Creates new form CadastrarFilme
      */
+    public int idClassificacao;
+    public int idCategoria;
+    FilmeDAO filmedao = new FilmeDAO();
+    CategoriaDAO categoriadao = new CategoriaDAO();
+    ClassificacaoDAO classificacaodao = new ClassificacaoDAO();
+
     public CadastrarFilme() {
         initComponents();
+        atualizarComboBoxCategoria();
+        atualizarComboBoxClassificacao();
     }
 
     /**
@@ -64,6 +82,11 @@ public class CadastrarFilme extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PTQX Locadora - Cadastro Filme");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -105,6 +128,20 @@ public class CadastrarFilme extends javax.swing.JFrame {
 
         jLabel8.setText("Capa");
 
+        txtCodFilme.setEnabled(false);
+
+        jcCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcCategoriaActionPerformed(evt);
+            }
+        });
+
+        jcClassificacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcClassificacaoActionPerformed(evt);
+            }
+        });
+
         txtCapa.setEnabled(false);
 
         btnEnviar.setBackground(new java.awt.Color(0, 102, 255));
@@ -126,9 +163,7 @@ public class CadastrarFilme extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lbCapa, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(lbCapa, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,44 +215,46 @@ public class CadastrarFilme extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(txtAno)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtDuracao, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtTitulo)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCodFilme, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel3)
-                                        .addComponent(jLabel4))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(txtAno)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jLabel5)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(txtDuracao, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(txtTitulo)))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel6)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jcCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel7)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jcClassificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel8)
-                                    .addGap(14, 14, 14)
-                                    .addComponent(txtCapa, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(52, 52, 52)
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)
+                                .addComponent(jcCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtCodFilme, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel8)
+                                        .addGap(14, 14, 14)
+                                        .addComponent(txtCapa, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jcClassificacao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 48, Short.MAX_VALUE))
+                        .addGap(35, 35, 35))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnLimpar)
-                        .addGap(191, 191, 191)
+                        .addGap(195, 195, 195)
                         .addComponent(btnSalvar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCancelar)
@@ -281,11 +318,43 @@ public class CadastrarFilme extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-
+        txtTitulo.setText("");
+        txtAno.setText("");
+        txtDuracao.setText("");
+        txtCapa.setText("");
+        setCapaPadrao();
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        String titulo = txtTitulo.getText();
+        int ano = Integer.parseInt(txtAno.getText());
+        String duracao = txtDuracao.getText();
+        String capa = txtCapa.getText();
 
+        if (titulo.equals("") || ano < 0 || duracao.equals("") || capa.equals("")) {
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos", "PTQX Locadora",
+                    JOptionPane.WARNING_MESSAGE);
+        } else {
+            Filme filme = new Filme();
+            filme.setTitulo(titulo);
+            filme.setAno(ano);
+            filme.setDuracao(duracao);
+            filme.setIdCategoria(idCategoria);
+            filme.setIdClassificacao(idClassificacao);
+            filme.setCapa(capa);
+
+            filmedao.cadastrarFilme(filme);
+            File pasta = new File("C:/Locadora/Pictures");
+
+            txtCodFilme.setText("");
+            txtTitulo.setText("");
+            txtAno.setText("");
+            txtDuracao.setText("");
+            txtCapa.setText("");
+            setCapaPadrao();
+
+            txtCodFilme.setText(filmedao.getUltimoCadastro() + "");
+        }
 
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -311,22 +380,52 @@ public class CadastrarFilme extends javax.swing.JFrame {
                 lbCapa.setIcon(new ImageIcon(image.getImage().getScaledInstance(lbCapa.getWidth(),
                         lbCapa.getHeight(), Image.SCALE_DEFAULT)));
 
-                
                 File pasta = new File("C:/Locadora/Pictures");
-
                 if (!pasta.exists()) {
                     pasta.mkdirs();
                 }
-                
+
                 File arquivo = new File(fileChooser.getSelectedFile().getPath());
-                File destino = new File("C:/Locadora/Pictures/"+nome);
+                File destino = new File("C:/Locadora/Pictures/" + txtCapa.getText());
                 FilmeFuncoes.copyFile(arquivo, destino);
+
             }
-        } catch (HeadlessException | IOException ex) {
+
+        } catch (HeadlessException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possível carregar a capa", "PTQX Locadora",
                     JOptionPane.WARNING_MESSAGE);
+        } catch (IOException ex) {
+
         }
     }//GEN-LAST:event_btnEnviarActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        txtCodFilme.setText("" + filmedao.getUltimoCadastro());
+        setCapaPadrao();
+
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jcCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcCategoriaActionPerformed
+        String nome = jcCategoria.getSelectedItem().toString();
+        List<Categoria> lista = new ArrayList<>();
+
+        lista = categoriadao.consultaIdCategoria(nome);
+
+        for (Categoria c : lista) {
+            idCategoria = c.getId();
+        }
+    }//GEN-LAST:event_jcCategoriaActionPerformed
+
+    private void jcClassificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcClassificacaoActionPerformed
+        String nome = jcClassificacao.getSelectedItem().toString();
+        List<Classificacao> lista = new ArrayList<>();
+
+        lista = classificacaodao.consultaIdClassificacao(nome);
+
+        for (Classificacao c : lista) {
+            idClassificacao = c.getId();
+        }
+    }//GEN-LAST:event_jcClassificacaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -379,8 +478,8 @@ public class CadastrarFilme extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JComboBox<String> jcCategoria;
-    private javax.swing.JComboBox<String> jcClassificacao;
+    private javax.swing.JComboBox<Object> jcCategoria;
+    private javax.swing.JComboBox<Object> jcClassificacao;
     private javax.swing.JLabel lbCapa;
     private javax.swing.JTextField txtAno;
     private javax.swing.JTextField txtCapa;
@@ -388,4 +487,22 @@ public class CadastrarFilme extends javax.swing.JFrame {
     private javax.swing.JTextField txtDuracao;
     private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
+    public void atualizarComboBoxCategoria() {
+        for (Categoria c : categoriadao.listarCategoria()) {
+            jcCategoria.addItem(c.getNome());
+        }
+    }
+
+    public void atualizarComboBoxClassificacao() {
+        for (Classificacao cla : classificacaodao.listarClassificacao()) {
+            jcClassificacao.addItem(cla.getNome());
+        }
+    }
+
+    public void setCapaPadrao() {
+        ImageIcon image = new ImageIcon("C:/Locadora/Pictures/logodvd.png");
+        lbCapa.setIcon(new ImageIcon(image.getImage().getScaledInstance(lbCapa.getWidth(),
+                lbCapa.getHeight(), Image.SCALE_DEFAULT)));
+    }
+
 }
