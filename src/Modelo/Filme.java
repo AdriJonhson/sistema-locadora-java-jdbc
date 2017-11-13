@@ -9,6 +9,24 @@ public class Filme {
     public int ano;
     public String duracao;
     public String capa;
+    public String nomeCategoria;
+    public String nomeClassificacao;
+
+    public String getNomeCategoria() {
+        return nomeCategoria;
+    }
+
+    public void setNomeCategoria(String nomeCategoria) {
+        this.nomeCategoria = nomeCategoria;
+    }
+
+    public String getNomeClassificacao() {
+        return nomeClassificacao;
+    }
+
+    public void setNomeClassificacao(String nomeClassificacao) {
+        this.nomeClassificacao = nomeClassificacao;
+    }
 
     public int getIdFilme() {
         return idFilme;
@@ -64,5 +82,10 @@ public class Filme {
 
     public void setCapa(String capa) {
         this.capa = capa;
+    }
+
+    @Override
+    public String toString() {
+        return getIdFilme() + "";
     }
 }

@@ -1,5 +1,6 @@
 package Controller;
 
+import Modelo.Filme;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -28,5 +29,20 @@ public class FilmeFuncoes {
             }
         }
     }
-   
+
+    public boolean verificarCamposVazios(Filme filme){
+        boolean chave = false;
+        
+        String titulo = filme.getTitulo();
+        int ano = filme.getAno();
+        String duracao = filme.getDuracao();
+        String capa = filme.getCapa();
+        
+        if(!(titulo.equals("") || ano <= 0 || duracao.equals("") || capa.equals(""))){
+            chave = true;
+        }
+        
+        return chave;
+    }
+
 }

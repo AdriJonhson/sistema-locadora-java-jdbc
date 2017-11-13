@@ -5,6 +5,24 @@
  */
 package Visao.Alterar;
 
+import Controller.FilmeFuncoes;
+import DAO.CategoriaDAO;
+import DAO.ClassificacaoDAO;
+import DAO.FilmeDAO;
+import Modelo.Categoria;
+import Modelo.Classificacao;
+import Modelo.Filme;
+import java.awt.HeadlessException;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author Familia
@@ -14,8 +32,21 @@ public class AlterarFilme extends javax.swing.JFrame {
     /**
      * Creates new form AlterarFIlme
      */
+    int idCategoria = 0;
+    int idClassificacao = 0;
+
+    FilmeDAO dao = new FilmeDAO();
+    CategoriaDAO catdao = new CategoriaDAO();
+    ClassificacaoDAO clasdao = new ClassificacaoDAO();
+
+    Filme filme = new Filme();
+    FilmeFuncoes filmeFunc = new FilmeFuncoes();
+
     public AlterarFilme() {
         initComponents();
+        atualizarComboBoxCodigo();
+        atualizarComboBoxCategoria();
+        atualizarComboBoxClassificacao();
     }
 
     /**
@@ -27,30 +58,410 @@ public class AlterarFilme extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jSeparator1 = new javax.swing.JSeparator();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        btnLimpar = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtTitulo = new javax.swing.JTextField();
+        txtAno = new javax.swing.JTextField();
+        txtDuracao = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jcCategoria = new javax.swing.JComboBox<>();
+        jcClassificacao = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
+        txtCapa = new javax.swing.JTextField();
+        btnEnviar = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        lbCapa = new javax.swing.JLabel();
+        jcCodigoFilme = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("PTQX Locadora - Alterar Filmes");
+        setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel2.setBackground(new java.awt.Color(0, 102, 255));
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Alterar Filme");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(38, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(41, Short.MAX_VALUE))
+        );
+
+        jLabel2.setText("Código do Filme");
+
+        btnLimpar.setBackground(new java.awt.Color(0, 102, 255));
+        btnLimpar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnLimpar.setForeground(new java.awt.Color(255, 255, 255));
+        btnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/pencil.png"))); // NOI18N
+        btnLimpar.setText("Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
+
+        btnUpdate.setBackground(new java.awt.Color(0, 102, 255));
+        btnUpdate.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnUpdate.setForeground(new java.awt.Color(255, 255, 255));
+        btnUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/btn-salvar.png"))); // NOI18N
+        btnUpdate.setText("Salvar Alterações");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setBackground(new java.awt.Color(0, 102, 255));
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/sair-menu-2.png"))); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Título");
+
+        jLabel4.setText("Ano");
+
+        jLabel5.setText("Duração");
+
+        jLabel6.setText("Categoria");
+
+        jLabel7.setText("Classificação");
+
+        jcCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcCategoriaActionPerformed(evt);
+            }
+        });
+
+        jcClassificacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcClassificacaoActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Capa");
+
+        btnEnviar.setBackground(new java.awt.Color(0, 102, 255));
+        btnEnviar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnEnviar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEnviar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/magnifier.png"))); // NOI18N
+        btnEnviar.setText("Procurar");
+        btnEnviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarActionPerformed(evt);
+            }
+        });
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        lbCapa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lbCapa, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lbCapa, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jcCodigoFilme.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcCodigoFilmeActionPerformed(evt);
+            }
+        });
+
+        jButton1.setBackground(new java.awt.Color(0, 102, 255));
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/magnifier.png"))); // NOI18N
+        jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtCapa, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnEnviar))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jcClassificacao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jcCodigoFilme, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtTitulo))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtAno, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(32, 32, 32)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtDuracao, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jcCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(18, 71, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 54, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnLimpar)
+                        .addGap(216, 216, 216)
+                        .addComponent(btnUpdate)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCancelar)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jcCodigoFilme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(txtAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDuracao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(jcCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jcClassificacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(txtCapa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEnviar)))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        pack();
+        setSize(new java.awt.Dimension(851, 525));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        limparCampos();
+        setCapaPadrao();
+    }//GEN-LAST:event_btnLimparActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        filme.setTitulo(txtTitulo.getText());
+        filme.setAno(Integer.parseInt(txtAno.getText()));
+        filme.setDuracao(txtDuracao.getText());
+        filme.setIdCategoria(idCategoria);
+        filme.setIdClassificacao(idClassificacao);
+        filme.setCapa(txtCapa.getText());
+
+        if (filmeFunc.verificarCamposVazios(filme)) {
+            dao.alterarDadosFilme(filme);
+            limparCampos();
+            setCapaPadrao();
+        }else{
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos", "PTQX Locadora",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
+        try {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setCurrentDirectory(new File("/C:/PTQX locadora/Pictures"));
+            fileChooser.setDialogTitle("Carregar Capa");
+
+            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Capas", "jpg", "png", "jpeg");
+            fileChooser.setFileFilter(filter);
+            int retorno = fileChooser.showOpenDialog(this);
+
+            if (retorno == JFileChooser.APPROVE_OPTION) {
+                String nome = "" + fileChooser.getSelectedFile().getName();
+                txtCapa.setText(nome);
+                ImageIcon image = new ImageIcon(fileChooser.getSelectedFile().getPath());
+                lbCapa.setIcon(new ImageIcon(image.getImage().getScaledInstance(lbCapa.getWidth(),
+                        lbCapa.getHeight(), Image.SCALE_DEFAULT)));
+
+                File pasta = new File("C:/Locadora/Pictures");
+                if (!pasta.exists()) {
+                    pasta.mkdirs();
+                }
+
+                File arquivo = new File(fileChooser.getSelectedFile().getPath());
+                File destino = new File("C:/Locadora/Pictures/" + txtCapa.getText());
+                FilmeFuncoes.copyFile(arquivo, destino);
+
+            }
+
+        } catch (HeadlessException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível carregar a capa", "PTQX Locadora",
+                    JOptionPane.WARNING_MESSAGE);
+        } catch (IOException ex) {
+        }
+    }//GEN-LAST:event_btnEnviarActionPerformed
+
+    private void jcCodigoFilmeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcCodigoFilmeActionPerformed
+        Filme f = (Filme) jcCodigoFilme.getSelectedItem();
+        filme.setIdFilme(f.getIdFilme());
+    }//GEN-LAST:event_jcCodigoFilmeActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Filme filme = (Filme) jcCodigoFilme.getSelectedItem();
+        int idSelecionado = filme.getIdFilme();
+
+        for (Filme f : dao.resgatarDadosFilme(idSelecionado)) {
+            txtTitulo.setText(f.getTitulo());
+            txtAno.setText(f.getAno() + "");
+            txtDuracao.setText(f.getDuracao());
+            txtCapa.setText(f.getCapa());
+
+            String caminho = "c:/Locadora/Pictures/" + txtCapa.getText();
+            ImageIcon image = new ImageIcon(caminho);
+            lbCapa.setIcon(new ImageIcon(image.getImage().getScaledInstance(lbCapa.getWidth(),
+                    lbCapa.getHeight(), Image.SCALE_DEFAULT)));
+
+            jcCategoria.setSelectedIndex(f.getIdCategoria() - 1);
+            jcClassificacao.setSelectedIndex(f.getIdClassificacao() - 1);
+
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        setCapaPadrao();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jcCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcCategoriaActionPerformed
+        String nome = jcCategoria.getSelectedItem().toString();
+        List<Categoria> lista = new ArrayList<>();
+
+        lista = catdao.consultaIdCategoria(nome);
+
+        for (Categoria c : lista) {
+            idCategoria = c.getId();
+        }
+    }//GEN-LAST:event_jcCategoriaActionPerformed
+
+    private void jcClassificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcClassificacaoActionPerformed
+        String nome = jcClassificacao.getSelectedItem().toString();
+        List<Classificacao> lista = new ArrayList<>();
+
+        lista = clasdao.consultaIdClassificacao(nome);
+
+        for (Classificacao c : lista) {
+            idClassificacao = c.getId();
+        }
+    }//GEN-LAST:event_jcClassificacaoActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
+        /*
+         * Set the Nimbus look and feel
+         */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+        /*
+         * If Nimbus (introduced in Java SE 6) is not available, stay with the
+         * default look and feel. For details see
+         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -71,14 +482,72 @@ public class AlterarFilme extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
-        /* Create and display the form */
+        /*
+         * Create and display the form
+         */
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 new AlterarFilme().setVisible(true);
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnEnviar;
+    private javax.swing.JButton btnLimpar;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JComboBox<Object> jcCategoria;
+    private javax.swing.JComboBox<Object> jcClassificacao;
+    private javax.swing.JComboBox<Object> jcCodigoFilme;
+    private javax.swing.JLabel lbCapa;
+    private javax.swing.JTextField txtAno;
+    private javax.swing.JTextField txtCapa;
+    private javax.swing.JTextField txtDuracao;
+    private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
+
+    public void atualizarComboBoxCodigo() {
+        for (Filme f : dao.listarIdFilmes()) {
+            jcCodigoFilme.addItem(f);
+        }
+    }
+
+    public void atualizarComboBoxCategoria() {
+        for (Categoria c : catdao.listarCategoria()) {
+            jcCategoria.addItem(c.getNome());
+        }
+    }
+
+    public void atualizarComboBoxClassificacao() {
+        for (Classificacao cla : clasdao.listarClassificacao()) {
+            jcClassificacao.addItem(cla.getNome());
+        }
+    }
+
+    public void setCapaPadrao() {
+        ImageIcon image = new ImageIcon("C:/Locadora/Pictures/logodvd.png");
+        lbCapa.setIcon(new ImageIcon(image.getImage().getScaledInstance(lbCapa.getWidth(),
+                lbCapa.getHeight(), Image.SCALE_DEFAULT)));
+    }
+
+    public void limparCampos() {
+        txtTitulo.setText("");
+        txtAno.setText("");
+        txtDuracao.setText("");
+        txtCapa.setText("");
+    }
 }
