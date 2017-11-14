@@ -15,9 +15,10 @@ public class ClienteFuncoes {
         String bairro = cliente.getBairro();
         int numero = cliente.getNumero();
         String cep = cliente.getCep();
-        //VERIFICAR CAMPOS: CPF;RG;TELEFONE;CEP;
-        if (!(nome.trim().equals("") || nasc.trim().equals("") || email.trim().equals("") || bairro.trim().equals("")
-                || numero <= 0)) {
+        
+        if (!(nome.trim().equals("") || nasc.trim().length() < 10 || rg.trim().length() < 12 || cpf.trim().length() < 14
+                || email.trim().equals("") || bairro.trim().equals("") || numero <= 0 || telefone.trim().length() < 14 ||
+                cep.trim().length() < 9)) {
             chave = true;
         }
 

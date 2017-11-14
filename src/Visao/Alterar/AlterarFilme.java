@@ -78,13 +78,13 @@ public class AlterarFilme extends javax.swing.JFrame {
         jcClassificacao = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         txtCapa = new javax.swing.JTextField();
-        btnEnviar = new javax.swing.JButton();
+        btnProcurarImagem = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         lbCapa = new javax.swing.JLabel();
         jcCodigoFilme = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("PTQX Locadora - Alterar Filmes");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -178,14 +178,14 @@ public class AlterarFilme extends javax.swing.JFrame {
 
         jLabel8.setText("Capa");
 
-        btnEnviar.setBackground(new java.awt.Color(0, 102, 255));
-        btnEnviar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnEnviar.setForeground(new java.awt.Color(255, 255, 255));
-        btnEnviar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/magnifier.png"))); // NOI18N
-        btnEnviar.setText("Procurar");
-        btnEnviar.addActionListener(new java.awt.event.ActionListener() {
+        btnProcurarImagem.setBackground(new java.awt.Color(0, 102, 255));
+        btnProcurarImagem.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnProcurarImagem.setForeground(new java.awt.Color(255, 255, 255));
+        btnProcurarImagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/magnifier.png"))); // NOI18N
+        btnProcurarImagem.setText("Procurar");
+        btnProcurarImagem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEnviarActionPerformed(evt);
+                btnProcurarImagemActionPerformed(evt);
             }
         });
 
@@ -238,7 +238,7 @@ public class AlterarFilme extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtCapa, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnEnviar))
+                                .addComponent(btnProcurarImagem))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -309,7 +309,7 @@ public class AlterarFilme extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
                             .addComponent(txtCapa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEnviar)))
+                            .addComponent(btnProcurarImagem)))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -351,7 +351,7 @@ public class AlterarFilme extends javax.swing.JFrame {
             dao.alterarDadosFilme(filme);
             limparCampos();
             setCapaPadrao();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos", "PTQX Locadora",
                     JOptionPane.WARNING_MESSAGE);
         }
@@ -362,7 +362,7 @@ public class AlterarFilme extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
+    private void btnProcurarImagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcurarImagemActionPerformed
         try {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setCurrentDirectory(new File("/C:/PTQX locadora/Pictures"));
@@ -396,7 +396,7 @@ public class AlterarFilme extends javax.swing.JFrame {
                     JOptionPane.WARNING_MESSAGE);
         } catch (IOException ex) {
         }
-    }//GEN-LAST:event_btnEnviarActionPerformed
+    }//GEN-LAST:event_btnProcurarImagemActionPerformed
 
     private void jcCodigoFilmeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcCodigoFilmeActionPerformed
         Filme f = (Filme) jcCodigoFilme.getSelectedItem();
@@ -404,6 +404,8 @@ public class AlterarFilme extends javax.swing.JFrame {
     }//GEN-LAST:event_jcCodigoFilmeActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        ativarCampos();
+
         Filme filme = (Filme) jcCodigoFilme.getSelectedItem();
         int idSelecionado = filme.getIdFilme();
 
@@ -423,10 +425,6 @@ public class AlterarFilme extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        setCapaPadrao();
-    }//GEN-LAST:event_formWindowOpened
 
     private void jcCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcCategoriaActionPerformed
         String nome = jcCategoria.getSelectedItem().toString();
@@ -449,6 +447,11 @@ public class AlterarFilme extends javax.swing.JFrame {
             idClassificacao = c.getId();
         }
     }//GEN-LAST:event_jcClassificacaoActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        setCapaPadrao();
+        desativarCampos();
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -494,8 +497,8 @@ public class AlterarFilme extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnEnviar;
     private javax.swing.JButton btnLimpar;
+    private javax.swing.JButton btnProcurarImagem;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -539,8 +542,8 @@ public class AlterarFilme extends javax.swing.JFrame {
     }
 
     public void setCapaPadrao() {
-        ImageIcon image = new ImageIcon("C:/Locadora/Pictures/logodvd.png");
-        lbCapa.setIcon(new ImageIcon(image.getImage().getScaledInstance(lbCapa.getWidth(),
+        ImageIcon teste = new javax.swing.ImageIcon(getClass().getResource("/Icons/logodvd.png"));
+        lbCapa.setIcon(new ImageIcon(teste.getImage().getScaledInstance(lbCapa.getWidth(),
                 lbCapa.getHeight(), Image.SCALE_DEFAULT)));
     }
 
@@ -549,5 +552,27 @@ public class AlterarFilme extends javax.swing.JFrame {
         txtAno.setText("");
         txtDuracao.setText("");
         txtCapa.setText("");
+        desativarCampos();
     }
+
+    public void desativarCampos() {
+        txtTitulo.setEnabled(false);
+        txtAno.setEnabled(false);
+        txtCapa.setEnabled(false);
+        txtDuracao.setEnabled(false);
+        jcCategoria.setEnabled(false);
+        jcClassificacao.setEnabled(false);
+        btnProcurarImagem.setEnabled(false);
+    }
+
+    public void ativarCampos() {
+        txtTitulo.setEnabled(true);
+        txtAno.setEnabled(true);
+        txtCapa.setEnabled(true);
+        txtDuracao.setEnabled(true);
+        jcCategoria.setEnabled(true);
+        jcClassificacao.setEnabled(true);
+        btnProcurarImagem.setEnabled(true);
+    }
+
 }

@@ -18,8 +18,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -36,9 +34,11 @@ public class CadastrarFilme extends javax.swing.JFrame {
      */
     public int idClassificacao;
     public int idCategoria;
+
     FilmeDAO filmedao = new FilmeDAO();
     CategoriaDAO categoriadao = new CategoriaDAO();
     ClassificacaoDAO classificacaodao = new ClassificacaoDAO();
+    FilmeFuncoes filmeFunc = new FilmeFuncoes();
 
     public CadastrarFilme() {
         initComponents();
@@ -318,43 +318,29 @@ public class CadastrarFilme extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        txtTitulo.setText("");
-        txtAno.setText("");
-        txtDuracao.setText("");
-        txtCapa.setText("");
+        limparCampos();
         setCapaPadrao();
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        String titulo = txtTitulo.getText();
-        int ano = Integer.parseInt(txtAno.getText());
-        String duracao = txtDuracao.getText();
-        String capa = txtCapa.getText();
+        Filme filme = new Filme();
+        filme.setTitulo(txtTitulo.getText());
+        filme.setAno(Integer.parseInt(txtAno.getText()));
+        filme.setDuracao(txtDuracao.getText());
+        filme.setIdCategoria(idCategoria);
+        filme.setIdClassificacao(idClassificacao);
+        filme.setCapa(txtCapa.getText());
 
-        if (titulo.equals("") || ano < 0 || duracao.equals("") || capa.equals("")) {
+        if (filmeFunc.verificarCamposVazios(filme)) {
+            filmedao.cadastrarFilme(filme);
+            limparCampos();
+            setCapaPadrao();
+            txtCodFilme.setText(filmedao.getUltimoCadastro() + "");
+        } else {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos", "PTQX Locadora",
                     JOptionPane.WARNING_MESSAGE);
-        } else {
-            Filme filme = new Filme();
-            filme.setTitulo(titulo);
-            filme.setAno(ano);
-            filme.setDuracao(duracao);
-            filme.setIdCategoria(idCategoria);
-            filme.setIdClassificacao(idClassificacao);
-            filme.setCapa(capa);
-
-            filmedao.cadastrarFilme(filme);
-            File pasta = new File("C:/Locadora/Pictures");
-
-            txtCodFilme.setText("");
-            txtTitulo.setText("");
-            txtAno.setText("");
-            txtDuracao.setText("");
-            txtCapa.setText("");
-            setCapaPadrao();
-
-            txtCodFilme.setText(filmedao.getUltimoCadastro() + "");
         }
+
 
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -500,9 +486,17 @@ public class CadastrarFilme extends javax.swing.JFrame {
     }
 
     public void setCapaPadrao() {
-        ImageIcon image = new ImageIcon("C:/Locadora/Pictures/logodvd.png");
-        lbCapa.setIcon(new ImageIcon(image.getImage().getScaledInstance(lbCapa.getWidth(),
+        ImageIcon teste = new javax.swing.ImageIcon(getClass().getResource("/Icons/logodvd.png"));
+        lbCapa.setIcon(new ImageIcon(teste.getImage().getScaledInstance(lbCapa.getWidth(),
                 lbCapa.getHeight(), Image.SCALE_DEFAULT)));
+    }
+
+    public void limparCampos() {
+        txtCodFilme.setText("");
+        txtTitulo.setText("");
+        txtAno.setText("");
+        txtDuracao.setText("");
+        txtCapa.setText("");
     }
 
 }

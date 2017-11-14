@@ -7,6 +7,7 @@ package Visao.Consultar;
 
 import DAO.FilmeDAO;
 import Modelo.Filme;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -46,7 +47,8 @@ public class ConsultarFilme extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtTabelaFilmes = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("PTQX Locadora - Consulta de Filmes");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -159,8 +161,7 @@ public class ConsultarFilme extends javax.swing.JFrame {
                     .addComponent(btnBuscarCodigo)
                     .addComponent(btnBuscaTodos))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -175,6 +176,7 @@ public class ConsultarFilme extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarNomeActionPerformed
@@ -252,13 +254,13 @@ public class ConsultarFilme extends javax.swing.JFrame {
 
         for (Filme f : dao.mostrarTodosFilmes()) {
             tabelaConsulta.addRow(new Object[]{
-                        f.getIdFilme(),
-                        f.getTitulo(),
-                        f.getAno(),
-                        f.getDuracao(),
-                        f.getNomeCategoria(),
-                        f.getNomeClassificacao()
-                    });
+                f.getIdFilme(),
+                f.getTitulo(),
+                f.getAno(),
+                f.getDuracao(),
+                f.getNomeCategoria(),
+                f.getNomeClassificacao()
+            });
         }
     }
 
@@ -269,13 +271,13 @@ public class ConsultarFilme extends javax.swing.JFrame {
 
         for (Filme f : dao.buscarPorId(idFilme)) {
             tabelaConsulta.addRow(new Object[]{
-                        f.getIdFilme(),
-                        f.getTitulo(),
-                        f.getAno(),
-                        f.getDuracao(),
-                        f.getNomeCategoria(),
-                        f.getNomeClassificacao()
-                    });
+                f.getIdFilme(),
+                f.getTitulo(),
+                f.getAno(),
+                f.getDuracao(),
+                f.getNomeCategoria(),
+                f.getNomeClassificacao()
+            });
         }
     }
 
@@ -286,13 +288,13 @@ public class ConsultarFilme extends javax.swing.JFrame {
 
         for (Filme f : dao.buscarPorTitulo(tituloFilme)) {
             tabelaConsulta.addRow(new Object[]{
-                        f.getIdFilme(),
-                        f.getTitulo(),
-                        f.getAno(),
-                        f.getDuracao(),
-                        f.getNomeCategoria(),
-                        f.getNomeClassificacao()
-                    });
+                f.getIdFilme(),
+                f.getTitulo(),
+                f.getAno(),
+                f.getDuracao(),
+                f.getNomeCategoria(),
+                f.getNomeClassificacao()
+            });
         }
     }
 }

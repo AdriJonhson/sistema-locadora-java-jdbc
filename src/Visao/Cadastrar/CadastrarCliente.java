@@ -334,7 +334,7 @@ public class CadastrarCliente extends javax.swing.JFrame {
 
             dao.cadastrarCliente(cliente);
             txtCodCliente.setText("");
-            txtCodCliente.setText(dao.getUltimoIdCadastro()+"");
+            txtCodCliente.setText(dao.getUltimoIdCadastro() + "");
             limparCampos();
 
         } else {
@@ -350,7 +350,7 @@ public class CadastrarCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        txtCodCliente.setText(dao.getUltimoIdCadastro()+"");
+        txtCodCliente.setText(dao.getUltimoIdCadastro() + "");
     }//GEN-LAST:event_formWindowOpened
 
     /**
