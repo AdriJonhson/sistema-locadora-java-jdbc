@@ -162,7 +162,6 @@ public class ExcluirCliente extends javax.swing.JFrame {
                     JOptionPane.WARNING_MESSAGE);
         } else {
             Cliente cliente = (Cliente) cbCodCliente.getSelectedItem();
-            int index = cbCodCliente.getSelectedIndex();
             int idCliente = cliente.getId();
             String nomeCliente = txtNomeCliente.getText();
 
@@ -176,7 +175,6 @@ public class ExcluirCliente extends javax.swing.JFrame {
                 atualizarComboBox();
             }
         }
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void cbCodClienteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbCodClienteMousePressed

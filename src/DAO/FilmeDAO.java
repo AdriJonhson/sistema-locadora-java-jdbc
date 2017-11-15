@@ -71,10 +71,11 @@ public class FilmeDAO {
 
         try {
             stmt = con.prepareStatement("SELECT f.idfilme, f.titulo, f.ano, "
-                    + "f.duracao, cat.nome, cla.nome "
+                    + "f.duracao,  f.idcategoria, cat.nome, cat.idcategoria, cla.nome "
                     + "FROM filme AS f "
                     + "JOIN categoria AS cat "
-                    + "JOIN classificacao AS cla;");
+                    + "JOIN classificacao AS cla"
+                    + "WHERE f.idcategoria = cat.idcategoria");
             rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -197,7 +198,7 @@ public class FilmeDAO {
         ResultSet rs = null;
 
         try {
-            stmt = con.prepareStatement("SELECT idfilme FROM filme");
+            stmt = con.prepareStatement("SELECT idfilme, titulo FROM filme");
             rs = stmt.executeQuery();
 
             if (rs != null) {
@@ -206,7 +207,7 @@ public class FilmeDAO {
                     Filme filme = new Filme();
 
                     filme.setIdFilme(rs.getInt("idfilme"));
-
+                    filme.setTitulo(rs.getString("titulo"));
                     lista.add(filme);
                 }
 
@@ -258,11 +259,11 @@ public class FilmeDAO {
         return lista;
     }
 
-    public void alterarDadosFilme(Filme filme){
+    public void alterarDadosFilme(Filme filme) {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
-        
-        try{
+
+        try {
             stmt = con.prepareStatement("UPDATE filme SET titulo = ?, ano = ?, duracao = ?, idcategoria = ?,"
                     + "idclassificacao = ?, capa = ? WHERE idfilme = ?");
             stmt.setString(1, filme.getTitulo());
@@ -272,7 +273,7 @@ public class FilmeDAO {
             stmt.setInt(5, filme.getIdClassificacao());
             stmt.setString(6, filme.getCapa());
             stmt.setInt(7, filme.getIdFilme());
-            
+
             if (stmt.executeUpdate() > 0) {
                 JOptionPane.showMessageDialog(null, "Dados alterados com sucesso", "PTQX Locadora",
                         JOptionPane.INFORMATION_MESSAGE);
@@ -280,12 +281,83 @@ public class FilmeDAO {
                 JOptionPane.showMessageDialog(null, "Erro ao alterar os dados", "PTQX Locadora",
                         JOptionPane.WARNING_MESSAGE);
             }
-            
-            
-        }catch(SQLException ex){
+
+        } catch (SQLException ex) {
             System.err.println("FilmeDAO: " + ex);
-        }finally{
+        } finally {
             Conexao.closeConnection(con, stmt);
         }
     }
+
+    public String recuperarTituloFilme(int idFilme) {
+        String titulo = null;
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = con.prepareStatement("SELECT titulo FROM filme WHERE idfilme = ?");
+            stmt.setInt(1, idFilme);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                titulo = rs.getString("titulo");
+            }
+        } catch (SQLException ex) {
+            System.err.println("FilmeDAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+
+        return titulo;
+    }
+
+    public void excluirFilme(int idFilme) {
+
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = con.prepareStatement("DELETE FROM filme WHERE idfilme = ?");
+            stmt.setInt(1, idFilme);
+
+            if (stmt.executeUpdate() > 0) {
+                JOptionPane.showMessageDialog(null, "Filme Excluído com sucesso", "PTQX Locadora",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao tentar excluir o filme", "PTQX Locadora",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("FilmeDAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt);
+        }
+    }
+
+    public String recuperarCapaFilme(String tituloFilme) {
+        String capa = null;
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = con.prepareStatement("SELECT capa FROM filme WHERE titulo LIKE ?");
+            stmt.setString(1, "%"+tituloFilme+"%");
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                capa = rs.getString("capa");
+            }
+        } catch (SQLException ex) {
+            System.err.println("FilmeDAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+
+        return capa;
+    }
+
 }

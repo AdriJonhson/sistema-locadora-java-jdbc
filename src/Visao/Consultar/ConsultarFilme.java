@@ -78,7 +78,19 @@ public class ConsultarFilme extends javax.swing.JFrame {
 
         jLabel2.setText("Pesquisa por título");
 
+        txtBuscaTituo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBuscaTituoKeyPressed(evt);
+            }
+        });
+
         jLabel3.setText("Pesquisa por código");
+
+        txtBuscaCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBuscaCodigoKeyPressed(evt);
+            }
+        });
 
         btnBuscarNome.setBackground(new java.awt.Color(0, 102, 255));
         btnBuscarNome.setForeground(new java.awt.Color(255, 255, 255));
@@ -181,15 +193,31 @@ public class ConsultarFilme extends javax.swing.JFrame {
 
     private void btnBuscarNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarNomeActionPerformed
         buscarPorTitulo();
+        txtBuscaCodigo.setText("");
     }//GEN-LAST:event_btnBuscarNomeActionPerformed
 
     private void btnBuscarCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCodigoActionPerformed
         buscarPorId();
+        txtBuscaCodigo.setText("");
     }//GEN-LAST:event_btnBuscarCodigoActionPerformed
 
     private void btnBuscaTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaTodosActionPerformed
         mostrarTodosFilmes();
     }//GEN-LAST:event_btnBuscaTodosActionPerformed
+
+    private void txtBuscaCodigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscaCodigoKeyPressed
+        if (evt.getKeyCode() == 10) {
+            buscarPorId();
+            txtBuscaCodigo.setText("");
+        }
+    }//GEN-LAST:event_txtBuscaCodigoKeyPressed
+
+    private void txtBuscaTituoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscaTituoKeyPressed
+       if (evt.getKeyCode() == 10) {
+            buscarPorTitulo();
+            txtBuscaCodigo.setText("");
+        }
+    }//GEN-LAST:event_txtBuscaTituoKeyPressed
 
     /**
      * @param args the command line arguments
