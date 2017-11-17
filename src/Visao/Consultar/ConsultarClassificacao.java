@@ -5,11 +5,18 @@
  */
 package Visao.Consultar;
 
+import DAO.ClassificacaoDAO;
+import DAO.ClienteDAO;
+import Modelo.Classificacao;
+import Modelo.Cliente;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Familia
  */
 public class ConsultarClassificacao extends javax.swing.JFrame {
+    ClassificacaoDAO dao = new ClassificacaoDAO();
 
     /**
      * Creates new form ConsultarClassificacao
@@ -27,21 +34,162 @@ public class ConsultarClassificacao extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel2 = new javax.swing.JLabel();
+        InpNome = new javax.swing.JTextField();
+        BtnNome = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        InpCodigo = new javax.swing.JTextField();
+        BtnCodigo = new javax.swing.JButton();
+        BtnTodos = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTClassificacao = new javax.swing.JTable();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("PTQX Locadora ");
+
+        jPanel1.setBackground(new java.awt.Color(0, 102, 255));
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Consultar Classificação");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(38, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(41, Short.MAX_VALUE))
+        );
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Nome da Classificação");
+
+        InpNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InpNomeActionPerformed(evt);
+            }
+        });
+
+        BtnNome.setBackground(new java.awt.Color(0, 102, 255));
+        BtnNome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/magnifier.png"))); // NOI18N
+        BtnNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnNomeActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Código");
+
+        BtnCodigo.setBackground(new java.awt.Color(0, 102, 255));
+        BtnCodigo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/magnifier.png"))); // NOI18N
+        BtnCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCodigoActionPerformed(evt);
+            }
+        });
+
+        BtnTodos.setBackground(new java.awt.Color(0, 102, 255));
+        BtnTodos.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        BtnTodos.setForeground(new java.awt.Color(255, 255, 255));
+        BtnTodos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/magnifier.png"))); // NOI18N
+        BtnTodos.setText("TODOS");
+        BtnTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnTodosActionPerformed(evt);
+            }
+        });
+
+        jTClassificacao.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Nome da Classificação"
+            }
+        ));
+        jScrollPane1.setViewportView(jTClassificacao);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(4, 4, 4)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(InpNome, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BtnNome)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(InpCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BtnCodigo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 200, Short.MAX_VALUE)
+                .addComponent(BtnTodos)
+                .addContainerGap())
+            .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(InpNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BtnNome))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(InpCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BtnCodigo))
+                    .addComponent(BtnTodos))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void InpNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InpNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_InpNomeActionPerformed
+
+    private void BtnNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNomeActionPerformed
+      buscaPorNome();
+    }//GEN-LAST:event_BtnNomeActionPerformed
+
+    private void BtnCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCodigoActionPerformed
+        buscaPorId();
+    }//GEN-LAST:event_BtnCodigoActionPerformed
+
+    private void BtnTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnTodosActionPerformed
+       mostrarTodasClassificacao();
+    }//GEN-LAST:event_BtnTodosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +227,57 @@ public class ConsultarClassificacao extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnCodigo;
+    private javax.swing.JButton BtnNome;
+    private javax.swing.JButton BtnTodos;
+    private javax.swing.JTextField InpCodigo;
+    private javax.swing.JTextField InpNome;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTable jTClassificacao;
     // End of variables declaration//GEN-END:variables
+public void buscaPorNome() {
+        DefaultTableModel tabelaClassificacao = (DefaultTableModel) jTClassificacao.getModel();
+        tabelaClassificacao.setNumRows(0);
+        String nomeBusca = InpNome.getText();
+
+        for (Classificacao c : dao.buscaPorNome(nomeBusca)) {
+            tabelaClassificacao.addRow(new Object[]{
+                c.getId(),
+                c.getNome(),
+               
+            });
+        }
+    }
+
+ public void buscaPorId() {
+        DefaultTableModel tabelaClassificacao = (DefaultTableModel) jTClassificacao.getModel();
+        tabelaClassificacao.setNumRows(0);
+        int id = Integer.parseInt(InpCodigo.getText());
+
+        for (Classificacao c : dao.buscaPorId(id)) {
+            tabelaClassificacao.addRow(new Object[]{
+                c.getId(),
+                c.getNome(),
+               
+            });
+        }
+    }
+ 
+    public void mostrarTodasClassificacao() {
+        DefaultTableModel tabelaClassificacao = (DefaultTableModel) jTClassificacao.getModel();
+        tabelaClassificacao.setNumRows(0);
+
+        for (Classificacao c : dao.mostrarTodasClassificacao()) {
+            tabelaClassificacao.addRow(new Object[]{
+                c.getId(),
+                c.getNome(),
+            
+            });
+        }
+    }
 }

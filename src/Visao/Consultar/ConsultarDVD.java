@@ -5,6 +5,12 @@
  */
 package Visao.Consultar;
 
+import DAO.DVDDAO;
+import DAO.FilmeDAO;
+import Modelo.DVD;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Familia
@@ -14,6 +20,9 @@ public class ConsultarDVD extends javax.swing.JFrame {
     /**
      * Creates new form ConsultarDVD
      */
+    FilmeDAO filmedao = new FilmeDAO();
+    DVDDAO dvdao = new DVDDAO();
+
     public ConsultarDVD() {
         initComponents();
     }
@@ -27,21 +36,214 @@ public class ConsultarDVD extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        txCodigoDvd = new javax.swing.JTextField();
+        btnBuscarCodDvd = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        txCodigoFilme = new javax.swing.JTextField();
+        btnBuscarCodFilme = new javax.swing.JButton();
+        btnBuscaTodos = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTTabelaConsulta = new javax.swing.JTable();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("PTQX Locadora - Consulta de DVD");
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel2.setBackground(new java.awt.Color(0, 102, 255));
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Consulta de DVDs");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(38, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(41, Short.MAX_VALUE))
+        );
+
+        jLabel2.setText("Pesquisar por Código");
+
+        txCodigoDvd.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txCodigoDvdKeyPressed(evt);
+            }
+        });
+
+        btnBuscarCodDvd.setBackground(new java.awt.Color(0, 102, 255));
+        btnBuscarCodDvd.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscarCodDvd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/magnifier.png"))); // NOI18N
+        btnBuscarCodDvd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarCodDvdActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Pesquisar por Código do Filme");
+
+        txCodigoFilme.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txCodigoFilmeKeyPressed(evt);
+            }
+        });
+
+        btnBuscarCodFilme.setBackground(new java.awt.Color(0, 102, 255));
+        btnBuscarCodFilme.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscarCodFilme.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/magnifier.png"))); // NOI18N
+        btnBuscarCodFilme.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarCodFilmeActionPerformed(evt);
+            }
+        });
+
+        btnBuscaTodos.setBackground(new java.awt.Color(0, 102, 255));
+        btnBuscaTodos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnBuscaTodos.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscaTodos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/magnifier.png"))); // NOI18N
+        btnBuscaTodos.setText("Todos");
+        btnBuscaTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscaTodosActionPerformed(evt);
+            }
+        });
+
+        jTTabelaConsulta.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Filme", "Preço da Compra", "Data da Compra", "Situação"
+            }
+        ));
+        jScrollPane1.setViewportView(jTTabelaConsulta);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txCodigoDvd, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnBuscarCodDvd, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txCodigoFilme, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBuscarCodFilme, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
+                        .addComponent(btnBuscaTodos)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(txCodigoDvd))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(txCodigoFilme))
+                        .addGap(5, 5, 5))
+                    .addComponent(btnBuscarCodFilme)
+                    .addComponent(btnBuscarCodDvd)
+                    .addComponent(btnBuscaTodos))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txCodigoDvdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txCodigoDvdKeyPressed
+        if (evt.getKeyCode() == 10) {
+            if (txCodigoDvd.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Preencha o campo de busca do código do DVD", "PTQX Locadora",
+                        JOptionPane.WARNING_MESSAGE);
+            } else {
+                buscarPorCodigoDvd();
+                txCodigoDvd.setText("");
+
+            }
+        }
+    }//GEN-LAST:event_txCodigoDvdKeyPressed
+
+    private void btnBuscarCodDvdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCodDvdActionPerformed
+        if (txCodigoDvd.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Preencha o campo de busca do código do DVD", "PTQX Locadora",
+                    JOptionPane.WARNING_MESSAGE);
+        } else {
+            buscarPorCodigoDvd();
+            txCodigoDvd.setText("");
+
+        }
+    }//GEN-LAST:event_btnBuscarCodDvdActionPerformed
+
+    private void txCodigoFilmeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txCodigoFilmeKeyPressed
+        if (evt.getKeyCode() == 10) {
+            if (txCodigoFilme.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Preencha o campo de busca do código do DVD", "PTQX Locadora",
+                        JOptionPane.WARNING_MESSAGE);
+            } else {
+                buscarPorCodigoFilme();
+                txCodigoFilme.setText("");
+            }
+        }
+    }//GEN-LAST:event_txCodigoFilmeKeyPressed
+
+    private void btnBuscarCodFilmeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCodFilmeActionPerformed
+        if (txCodigoFilme.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Preencha o campo de busca do código do Filme", "PTQX Locadora",
+                    JOptionPane.WARNING_MESSAGE);
+        } else {
+            buscarPorCodigoFilme();
+            txCodigoFilme.setText("");
+
+        }
+    }//GEN-LAST:event_btnBuscarCodFilmeActionPerformed
+
+    private void btnBuscaTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaTodosActionPerformed
+        mostrarTodosDVD();
+    }//GEN-LAST:event_btnBuscaTodosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -80,5 +282,65 @@ public class ConsultarDVD extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscaTodos;
+    private javax.swing.JButton btnBuscarCodDvd;
+    private javax.swing.JButton btnBuscarCodFilme;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTTabelaConsulta;
+    private javax.swing.JTextField txCodigoDvd;
+    private javax.swing.JTextField txCodigoFilme;
     // End of variables declaration//GEN-END:variables
+
+    public void mostrarTodosDVD() {
+        DefaultTableModel tabelaConsulta = (DefaultTableModel) jTTabelaConsulta.getModel();
+        tabelaConsulta.setNumRows(0);
+
+        for (DVD d : dvdao.mostrarTodosDVD()) {
+            tabelaConsulta.addRow(new Object[]{
+                d.getIddvd(),
+                d.getTituloFilme(),
+                "R$ " + d.getPreco_compra(),
+                d.getData_compra(),
+                d.getSituacao()
+            });
+        }
+    }
+
+    public void buscarPorCodigoDvd() {
+        DefaultTableModel tabelaConsulta = (DefaultTableModel) jTTabelaConsulta.getModel();
+        tabelaConsulta.setNumRows(0);
+        int idDvd = Integer.parseInt(txCodigoDvd.getText());
+
+        for (DVD d : dvdao.buscarPorCodigoDVD(idDvd)) {
+            tabelaConsulta.addRow(new Object[]{
+                d.getIddvd(),
+                d.getTituloFilme(),
+                "R$ " + d.getPreco_compra(),
+                d.getData_compra(),
+                d.getSituacao()
+            });
+        }
+    }
+
+    public void buscarPorCodigoFilme() {
+        DefaultTableModel tabelaConsulta = (DefaultTableModel) jTTabelaConsulta.getModel();
+        tabelaConsulta.setNumRows(0);
+        int idFilme = Integer.parseInt(txCodigoFilme.getText());
+
+        for (DVD d : dvdao.buscarPorCodigoFilme(idFilme)) {
+            tabelaConsulta.addRow(new Object[]{
+                d.getIddvd(),
+                d.getTituloFilme(),
+                "R$ " + d.getPreco_compra(),
+                d.getData_compra(),
+                d.getSituacao()
+            });
+        }
+    }
+
 }

@@ -2,6 +2,7 @@ package DAO;
 
 import Modelo.Categoria;
 import Modelo.Classificacao;
+import Modelo.Cliente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -112,4 +113,110 @@ public class ClassificacaoDAO {
             Conexao.closeConnection(con, stmt);
         }
     }
+     
+    public List<Classificacao> buscaPorNome(String Classificacao) {
+        List<Classificacao> lista = new ArrayList<>();
+        boolean achou = false;
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = con.prepareStatement("SELECT idclassi, nome FROM classificacao WHERE nome LIKE ?");
+            stmt.setString(1, "%" + Classificacao + "%");
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Classificacao classificacao = new Classificacao();
+                classificacao.setId(rs.getInt("idclassi"));
+                classificacao.setNome(rs.getString("nome"));
+              
+                achou = true;
+                lista.add(classificacao);
+
+            }
+
+            if (!achou) {
+                JOptionPane.showMessageDialog(null, "Classificacao não encontrada", "PTQX Locadora",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("ClassificacaoDAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+
+        return lista;
+    }
+     
+    public List<Classificacao> buscaPorId(int id) {
+        List<Classificacao> lista = new ArrayList<>();
+        boolean achou = false;
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = con.prepareStatement("SELECT idclassi, nome FROM classificacao WHERE idclassi = ?");
+            stmt.setInt(1, id);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Classificacao classificacao = new Classificacao();
+                classificacao.setId(rs.getInt("idclassi"));
+                classificacao.setNome(rs.getString("nome"));
+               
+                achou = true;
+
+                lista.add(classificacao);
+            }
+
+            if (!achou) {
+                JOptionPane.showMessageDialog(null, "Classificação não encontrada", "PTQX Locadora",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            System.err.println("ClassificacaoDAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+
+        return lista;
+    }
+    
+public List<Classificacao> mostrarTodasClassificacao() {
+        List<Classificacao> lista = new ArrayList<>();
+        boolean achou = false;
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = con.prepareStatement("SELECT idClassi, nome FROM classificacao ORDER BY nome ASC");
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Classificacao classificacao = new Classificacao();
+                classificacao.setId(rs.getInt("idClassi"));
+                classificacao.setNome(rs.getString("nome"));
+             
+                achou = true;
+
+                lista.add(classificacao);
+            }
+
+            if (!achou) {
+                JOptionPane.showMessageDialog(null, "Nenhuma classificacao cadastrada", "PTQX Locadora",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            System.err.println("ClassificacaoDAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+
+        return lista;
+    }
+
 }

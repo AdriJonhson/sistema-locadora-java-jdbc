@@ -47,12 +47,10 @@ public class FilmeDAO {
         ResultSet rs = null;
 
         try {
-            //idFuncionario padrão
             stmt = con.prepareStatement("SELECT MAX(idfilme) FROM filme");
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Funcionario func = new Funcionario();
                 codigo = rs.getInt(1);
             }
         } catch (SQLException ex) {
@@ -70,12 +68,11 @@ public class FilmeDAO {
         boolean achou = false;
 
         try {
-            stmt = con.prepareStatement("SELECT f.idfilme, f.titulo, f.ano, "
-                    + "f.duracao,  f.idcategoria, cat.nome, cat.idcategoria, cla.nome "
-                    + "FROM filme AS f "
-                    + "JOIN categoria AS cat "
-                    + "JOIN classificacao AS cla"
-                    + "WHERE f.idcategoria = cat.idcategoria");
+            stmt = con.prepareStatement("SELECT f.idfilme, f.titulo, f.ano,\n"
+                    + "f.duracao,  f.idcategoria, cat.nome, cat.idCategoria, cla.nome\n"
+                    + "FROM filme AS f, categoria as cat, classificacao as cla\n"
+                    + "WHERE f.idcategoria = cat.idCategoria");
+
             rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -112,11 +109,10 @@ public class FilmeDAO {
         boolean achou = false;
 
         try {
-            stmt = con.prepareStatement("SELECT f.idfilme, f.titulo, f.ano, "
-                    + "f.duracao, cat.nome, cla.nome "
-                    + "FROM filme AS f "
-                    + "JOIN categoria AS cat "
-                    + "JOIN classificacao AS cla WHERE f.idfilme = ?");
+            stmt = con.prepareStatement("SELECT f.idfilme, f.titulo, f.ano,\n"
+                    + "f.duracao,  f.idcategoria, cat.nome, cat.idCategoria, cla.nome\n"
+                    + "FROM filme AS f, categoria as cat, classificacao as cla\n"
+                    + "WHERE f.idcategoria = cat.idCategoria AND f.idfilme = ?");
             stmt.setInt(1, idFilme);
 
             rs = stmt.executeQuery();
@@ -155,11 +151,11 @@ public class FilmeDAO {
         boolean achou = false;
 
         try {
-            stmt = con.prepareStatement("SELECT f.idfilme, f.titulo, f.ano, "
-                    + "f.duracao, cat.nome, cla.nome "
-                    + "FROM filme AS f "
-                    + "JOIN categoria AS cat "
-                    + "JOIN classificacao AS cla WHERE f.titulo LIKE ?");
+            stmt = con.prepareStatement("SELECT f.idfilme, f.titulo, f.ano,\n"
+                    + "f.duracao,  f.idcategoria, cat.nome, cat.idCategoria, cla.nome\n"
+                    + "FROM filme AS f, categoria as cat, classificacao as cla\n"
+                    + "WHERE f.idcategoria = cat.idCategoria AND f.titulo LIKE ?");
+
             stmt.setString(1, "%" + tituloFilme + "%");
 
             rs = stmt.executeQuery();
@@ -345,7 +341,7 @@ public class FilmeDAO {
 
         try {
             stmt = con.prepareStatement("SELECT capa FROM filme WHERE titulo LIKE ?");
-            stmt.setString(1, "%"+tituloFilme+"%");
+            stmt.setString(1, "%" + tituloFilme + "%");
             rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -360,4 +356,26 @@ public class FilmeDAO {
         return capa;
     }
 
+    public int recuperarIdFilme(String tituloFilme) {
+        int idFilme = 0;
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = con.prepareStatement("SELECT idfilme FROM filme WHERE titulo LIKE ?");
+            stmt.setString(1, "%" + tituloFilme + "%");
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                idFilme = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            System.err.println("FilmeDAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+
+        return idFilme;
+    }
 }
