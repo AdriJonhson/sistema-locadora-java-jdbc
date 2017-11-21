@@ -58,4 +58,11 @@ public class DVD {
         this.situacao = situacao;
     }
 
+    @Override
+    public String toString() {
+        return getIddvd() + "";
+    }
+    
+    
+
 }

@@ -22,7 +22,18 @@ public class ExcluirFilme extends javax.swing.JFrame {
 
     public ExcluirFilme() {
         initComponents();
+
         atualizarComboBox();
+
+        if (cbCodFilme.getItemCount() <= 0) {
+            JOptionPane.showMessageDialog(null, "Nenhum Filme cadastrado no sistema", "PTQX Locadora",
+                    JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        }
+        
+        Filme filme = (Filme) cbCodFilme.getSelectedItem();
+        int idFilme = filme.getIdFilme();
+        txtTituloFilme.setText(filme.getTitulo());
     }
 
     /**
@@ -38,13 +49,18 @@ public class ExcluirFilme extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        cbCodFilme = new javax.swing.JComboBox<>();
+        cbCodFilme = new javax.swing.JComboBox<Object>();
         txtTituloFilme = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("PTQX Locadora");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 255));
 
@@ -152,27 +168,30 @@ public class ExcluirFilme extends javax.swing.JFrame {
             int idFilme = filme.getIdFilme();
             String tituloFilme = txtTituloFilme.getText();
 
-            int opc = JOptionPane.showConfirmDialog(null, "Realmente deseja excluir o cliente:\n (" + idFilme + ") "
+            int opc = JOptionPane.showConfirmDialog(null, "Realmente deseja excluir o filme:\n (" + idFilme + ") "
                     + "(" + tituloFilme + ")", "PTQX Locadora", JOptionPane.YES_NO_OPTION);
 
             if (opc == 0) {
                 dao.excluirFilme(idFilme);
-                txtTituloFilme.setText("");
-                cbCodFilme.removeAllItems();
-                atualizarComboBox();
+                
+                dispose();
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void cbCodFilmeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbCodFilmeMousePressed
-        Filme filme = (Filme) cbCodFilme.getSelectedItem();
-        int idFilme = filme.getIdFilme();
-        txtTituloFilme.setText(filme.getTitulo());
+
     }//GEN-LAST:event_cbCodFilmeMousePressed
 
     private void cbCodFilmeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCodFilmeActionPerformed
-
+        Filme filme = (Filme) cbCodFilme.getSelectedItem();
+        int idFilme = filme.getIdFilme();
+        txtTituloFilme.setText(filme.getTitulo());
     }//GEN-LAST:event_cbCodFilmeActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments

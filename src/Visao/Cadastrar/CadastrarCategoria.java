@@ -92,6 +92,7 @@ public class CadastrarCategoria extends javax.swing.JFrame {
         jLabel3.setText("Nome");
 
         CodigoCategoria.setEditable(false);
+        CodigoCategoria.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         CodigoCategoria.setEnabled(false);
 
         BtnLimpar.setBackground(new java.awt.Color(0, 102, 255));
@@ -152,11 +153,9 @@ public class CadastrarCategoria extends javax.swing.JFrame {
                         .addGap(9, 9, 9)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addComponent(jLabel4)
                         .addContainerGap(36, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(BtnCancelar)
                         .addContainerGap())))
         );
@@ -210,15 +209,27 @@ public class CadastrarCategoria extends javax.swing.JFrame {
 
     private void BtnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCadastrarActionPerformed
 
-        Categoria categoria = new Categoria();
+        String nomeCategoria = NomeCategoria.getText();
 
-        categoria.setNome(NomeCategoria.getText());
+        if (dao.verificarCadastro(nomeCategoria)) {
+            JOptionPane.showMessageDialog(null, "Essa categoria já está cadastrada",
+                    "PTQX Locaradora", JOptionPane.WARNING_MESSAGE);
+        } else {
+            Categoria categoria = new Categoria();
 
-        dao.cadastrarCategoria(categoria);
+            categoria.setNome(nomeCategoria);
+
+            dao.cadastrarCategoria(categoria);
+
+            CodigoCategoria.setText("");
+            NomeCategoria.setText("");
+            CodigoCategoria.setText(dao.getUltimoIdCadastro() + "");
+        }
+
     }//GEN-LAST:event_BtnCadastrarActionPerformed
 
     private void BtnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLimparActionPerformed
-        limparCampos();
+        NomeCategoria.setText("");
     }//GEN-LAST:event_BtnLimparActionPerformed
 
     /**
@@ -269,8 +280,5 @@ public class CadastrarCategoria extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
-public void limparCampos() {
-        NomeCategoria.setText("");
-    }
-}
 
+}

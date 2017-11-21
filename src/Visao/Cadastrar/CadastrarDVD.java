@@ -107,6 +107,7 @@ public class CadastrarDVD extends javax.swing.JFrame {
 
         jLabel3.setText("Código");
 
+        jTCodigo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jTCodigo.setEnabled(false);
 
         jLabel4.setText("Situação");
@@ -195,6 +196,7 @@ public class CadastrarDVD extends javax.swing.JFrame {
             }
         });
 
+        txSituacao.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         txSituacao.setText("Disponivel");
         txSituacao.setEnabled(false);
 

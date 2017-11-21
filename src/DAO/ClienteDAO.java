@@ -323,7 +323,8 @@ public class ClienteDAO {
             }
 
         } catch (SQLException ex) {
-            System.err.println("ClienteDAO: " + ex);
+            JOptionPane.showMessageDialog(null, "Esse cliente possui um DVD alugado",
+                        "PTQX Locadora",JOptionPane.ERROR_MESSAGE);
         } finally {
             Conexao.closeConnection(con, stmt);
         }

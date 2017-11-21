@@ -399,12 +399,22 @@ public class AlterarCliente extends javax.swing.JFrame {
             cliente.setNumero(numero);
             cliente.setCep(txtCep.getText());
 
-            if (clienteFunc.VerificarCamposCadastro(cliente)) {
+            String nome = cliente.getNome();
+            String nasc = cliente.getDt_nasc();
+            String rg = cliente.getRg();
+            String cpf = cliente.getCpf();
+            String email = cliente.getEmail();
+            String telefone = cliente.getTelefone();
+            String bairro = cliente.getBairro();
+            String cep = cliente.getCep();
+
+            if (!(nome.trim().equals("") || nasc.trim().length() < 10 || rg.trim().length() < 12 || cpf.trim().length() < 14
+                    || email.trim().equals("") || bairro.trim().equals("") || numero <= 0 || telefone.trim().length() < 14
+                    || cep.trim().length() < 9)) {
+                dao.alterarDadosCliente(cliente);
+            } else {
                 JOptionPane.showMessageDialog(null, "Preencha todos os campos", "PTQX Locadora",
                         JOptionPane.WARNING_MESSAGE);
-            } else {
-                dao.alterarDadosCliente(cliente);
-
             }
 
         } else {

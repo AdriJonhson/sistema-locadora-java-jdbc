@@ -5,17 +5,35 @@
  */
 package Visao.Excluir;
 
+import DAO.CategoriaDAO;
+import Modelo.Categoria;
+import Modelo.Filme;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Familia
  */
 public class ExcluirCategoria extends javax.swing.JFrame {
 
+    CategoriaDAO dao = new CategoriaDAO();
+
     /**
      * Creates new form ExcluirCategoria
      */
     public ExcluirCategoria() {
         initComponents();
+        atualizarComboBox();
+
+        if (SelectCodigo.getItemCount() <= 0) {
+            JOptionPane.showMessageDialog(null, "Nenhuma Classificação cadastrada no sistema", "PTQX Locadora",
+                    JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        }
+
+        Categoria cat = (Categoria) SelectCodigo.getSelectedItem();
+        int idCat = cat.getId();
+        InpTitulo.setText(dao.resgatarNomeCategoria(idCat));
     }
 
     /**
@@ -27,21 +45,133 @@ public class ExcluirCategoria extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jTextField1 = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        SelectCodigo = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        InpTitulo = new javax.swing.JTextField();
+        BtnExcluir = new javax.swing.JButton();
+
+        jTextField1.setText("jTextField1");
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("PTQX Locadora");
+
+        jPanel1.setBackground(new java.awt.Color(0, 102, 255));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Excluir Categoria");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Código da Categoria");
+
+        SelectCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SelectCodigoActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Título do Filme");
+
+        InpTitulo.setEditable(false);
+
+        BtnExcluir.setBackground(new java.awt.Color(255, 255, 255));
+        BtnExcluir.setForeground(new java.awt.Color(0, 102, 255));
+        BtnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/btn-excluir.png"))); // NOI18N
+        BtnExcluir.setText("EXCLUIR");
+        BtnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnExcluirActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(246, 246, 246)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(InpTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(27, 27, 27)
+                                .addComponent(BtnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(SelectCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(45, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(32, 32, 32)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(SelectCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(InpTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnExcluir))
+                .addContainerGap(26, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void SelectCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectCodigoActionPerformed
+        Categoria cat = (Categoria) SelectCodigo.getSelectedItem();
+        int idCat = cat.getId();
+        InpTitulo.setText(dao.resgatarNomeCategoria(idCat));
+    }//GEN-LAST:event_SelectCodigoActionPerformed
+
+    private void BtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnExcluirActionPerformed
+        if (BtnExcluir.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Nenhum cliente para ser deletado", "PTQX Locadora",
+                    JOptionPane.WARNING_MESSAGE);
+        } else {
+            Categoria categoria = (Categoria) SelectCodigo.getSelectedItem();
+            int idCategoria = categoria.getId();
+            String tituloFilme = InpTitulo.getText();
+
+            int opc = JOptionPane.showConfirmDialog(null, "Realmente deseja excluir o cliente:\n (" + idCategoria + ") "
+                    + "(" + tituloFilme + ")", "PTQX Locadora", JOptionPane.YES_NO_OPTION);
+
+            if (opc == 0) {
+                dao.excluirCategoria(idCategoria);
+                dispose();
+            }
+        }
+    }//GEN-LAST:event_BtnExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -80,5 +210,20 @@ public class ExcluirCategoria extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnExcluir;
+    private javax.swing.JTextField InpTitulo;
+    private javax.swing.JComboBox<Object> SelectCodigo;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
+    public void atualizarComboBox() {
+        for (Categoria c : dao.listarIdCategoria()) {
+            SelectCodigo.addItem(c);
+        }
+    }
+
 }

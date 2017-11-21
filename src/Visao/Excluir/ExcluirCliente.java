@@ -27,6 +27,15 @@ public class ExcluirCliente extends javax.swing.JFrame {
         initComponents();
         atualizarComboBox();
         
+        if(cbCodCliente.getItemCount() <= 0){
+            JOptionPane.showMessageDialog(null, "Nenhum Cliente cadastrado no sistema", "PTQX Locadora",
+                    JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        }
+        
+        Cliente cliente = (Cliente) cbCodCliente.getSelectedItem();
+        int idCliente = cliente.getId();
+        txtNomeCliente.setText(dao.mostrarNomeCliente(idCliente));
     }
 
     /**
@@ -83,9 +92,9 @@ public class ExcluirCliente extends javax.swing.JFrame {
             }
         });
 
-        cbCodCliente.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                cbCodClienteMousePressed(evt);
+        cbCodCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCodClienteActionPerformed(evt);
             }
         });
 
@@ -170,18 +179,16 @@ public class ExcluirCliente extends javax.swing.JFrame {
 
             if (opc == 0) {
                 dao.excluirCliente(idCliente);
-                txtNomeCliente.setText("");
-                cbCodCliente.removeAllItems();
-                atualizarComboBox();
+                dispose();
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void cbCodClienteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbCodClienteMousePressed
+    private void cbCodClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCodClienteActionPerformed
         Cliente cliente = (Cliente) cbCodCliente.getSelectedItem();
         int idCliente = cliente.getId();
         txtNomeCliente.setText(dao.mostrarNomeCliente(idCliente));
-    }//GEN-LAST:event_cbCodClienteMousePressed
+    }//GEN-LAST:event_cbCodClienteActionPerformed
 
     /**
      * @param args the command line arguments

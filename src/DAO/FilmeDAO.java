@@ -55,6 +55,8 @@ public class FilmeDAO {
             }
         } catch (SQLException ex) {
             System.out.println("Filme DAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt);
         }
 
         return (codigo + 1);
@@ -71,7 +73,7 @@ public class FilmeDAO {
             stmt = con.prepareStatement("SELECT f.idfilme, f.titulo, f.ano,\n"
                     + "f.duracao,  f.idcategoria, cat.nome, cat.idCategoria, cla.nome\n"
                     + "FROM filme AS f, categoria as cat, classificacao as cla\n"
-                    + "WHERE f.idcategoria = cat.idCategoria");
+                    + "WHERE f.idcategoria = cat.idCategoria AND f.idclassificacao = cla.idclassi");
 
             rs = stmt.executeQuery();
 
@@ -327,7 +329,9 @@ public class FilmeDAO {
             }
 
         } catch (SQLException ex) {
-            System.err.println("FilmeDAO: " + ex);
+            JOptionPane.showMessageDialog(null, "Não é possível excluir esse filme, pois existe um DVD atrelado"
+                    + " ao mesmo", "PTQX Locadora",
+                        JOptionPane.WARNING_MESSAGE);
         } finally {
             Conexao.closeConnection(con, stmt);
         }

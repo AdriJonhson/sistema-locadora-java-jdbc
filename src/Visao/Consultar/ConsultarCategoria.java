@@ -5,11 +5,19 @@
  */
 package Visao.Consultar;
 
+import DAO.CategoriaDAO;
+import DAO.ClassificacaoDAO;
+import Modelo.Categoria;
+import Modelo.Classificacao;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Familia
  */
 public class ConsultarCategoria extends javax.swing.JFrame {
+
+    CategoriaDAO dao = new CategoriaDAO();
 
     /**
      * Creates new form ConsultarCategoria
@@ -31,14 +39,14 @@ public class ConsultarCategoria extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        InpNome = new javax.swing.JTextField();
+        BtnCodigo = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
+        InpCodigo = new javax.swing.JTextField();
+        BtnTodos = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton4 = new javax.swing.JButton();
+        jTCategoria = new javax.swing.JTable();
+        BtnNome = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("PTQX Locadora - Consulta de Categorias");
@@ -71,23 +79,40 @@ public class ConsultarCategoria extends javax.swing.JFrame {
 
         jLabel2.setText("Nome da categoria");
 
-        jButton1.setBackground(new java.awt.Color(0, 102, 255));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/magnifier.png"))); // NOI18N
-
-        jLabel3.setText("Código da categoria");
-
-        jButton3.setBackground(new java.awt.Color(0, 102, 255));
-        jButton3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/magnifier.png"))); // NOI18N
-        jButton3.setText("Todos");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+        InpNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                InpNomeKeyPressed(evt);
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        BtnCodigo.setBackground(new java.awt.Color(0, 102, 255));
+        BtnCodigo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/magnifier.png"))); // NOI18N
+        BtnCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCodigoActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Código da categoria");
+
+        InpCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                InpCodigoKeyPressed(evt);
+            }
+        });
+
+        BtnTodos.setBackground(new java.awt.Color(0, 102, 255));
+        BtnTodos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        BtnTodos.setForeground(new java.awt.Color(255, 255, 255));
+        BtnTodos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/magnifier.png"))); // NOI18N
+        BtnTodos.setText("Todos");
+        BtnTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnTodosActionPerformed(evt);
+            }
+        });
+
+        jTCategoria.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -95,10 +120,15 @@ public class ConsultarCategoria extends javax.swing.JFrame {
                 "Código", "Nome"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTCategoria);
 
-        jButton4.setBackground(new java.awt.Color(0, 102, 255));
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/magnifier.png"))); // NOI18N
+        BtnNome.setBackground(new java.awt.Color(0, 102, 255));
+        BtnNome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/magnifier.png"))); // NOI18N
+        BtnNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnNomeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -112,17 +142,17 @@ public class ConsultarCategoria extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(InpNome, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(BtnNome, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(InpCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BtnCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3)))
+                        .addComponent(BtnTodos)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -132,17 +162,18 @@ public class ConsultarCategoria extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel2)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel3)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton3))))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(InpNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(InpCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BtnTodos)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(9, 9, 9)
-                        .addComponent(jButton4)))
+                        .addComponent(BtnNome))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(BtnCodigo)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -163,9 +194,33 @@ public class ConsultarCategoria extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void BtnTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnTodosActionPerformed
+        mostrarTodasCategoria();
+    }//GEN-LAST:event_BtnTodosActionPerformed
+
+    private void BtnNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNomeActionPerformed
+        buscaPorNome();
+        InpNome.setText("");
+    }//GEN-LAST:event_BtnNomeActionPerformed
+
+    private void BtnCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCodigoActionPerformed
+        buscaPorId();
+        InpCodigo.setText("");
+    }//GEN-LAST:event_BtnCodigoActionPerformed
+
+    private void InpNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_InpNomeKeyPressed
+        if (evt.getKeyCode() == 10) {
+            buscaPorNome();
+            InpNome.setText("");
+        }
+    }//GEN-LAST:event_InpNomeKeyPressed
+
+    private void InpCodigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_InpCodigoKeyPressed
+        if (evt.getKeyCode() == 10) {
+            buscaPorId();
+            InpCodigo.setText("");
+        }
+    }//GEN-LAST:event_InpCodigoKeyPressed
 
     /**
      * @param args the command line arguments
@@ -203,17 +258,52 @@ public class ConsultarCategoria extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton BtnCodigo;
+    private javax.swing.JButton BtnNome;
+    private javax.swing.JButton BtnTodos;
+    private javax.swing.JTextField InpCodigo;
+    private javax.swing.JTextField InpNome;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable jTCategoria;
     // End of variables declaration//GEN-END:variables
+
+    public void buscaPorNome() {
+        DefaultTableModel tabelaCategoria = (DefaultTableModel) jTCategoria.getModel();
+        tabelaCategoria.setNumRows(0);
+        String nomeBusca = InpNome.getText();
+
+        for (Categoria c : dao.buscaPorNome(nomeBusca)) {
+            tabelaCategoria.addRow(new Object[]{
+                c.getId(),
+                c.getNome(),});
+        }
+    }
+
+    public void buscaPorId() {
+        DefaultTableModel tabelaCategoria = (DefaultTableModel) jTCategoria.getModel();
+        tabelaCategoria.setNumRows(0);
+        int id = Integer.parseInt(InpCodigo.getText());
+
+        for (Categoria c : dao.buscaPorId(id)) {
+            tabelaCategoria.addRow(new Object[]{
+                c.getId(),
+                c.getNome(),});
+        }
+    }
+
+    public void mostrarTodasCategoria() {
+        DefaultTableModel tabelaCategoria = (DefaultTableModel) jTCategoria.getModel();
+        tabelaCategoria.setNumRows(0);
+
+        for (Categoria c : dao.mostrarTodasClassificacao()) {
+            tabelaCategoria.addRow(new Object[]{
+                c.getId(),
+                c.getNome(),});
+        }
+    }
 }
