@@ -1,5 +1,7 @@
 package Principal;
 
+import Locacao.ConsultaDevolucao;
+import Locacao.ControleLocacao;
 import Modelo.Funcionario;
 import javax.swing.Box;
 import javax.swing.JOptionPane;
@@ -79,11 +81,21 @@ public class Menu extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("DejaVu Sans", 1, 14)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/cart_put.png"))); // NOI18N
         jButton1.setText("Locação");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setFont(new java.awt.Font("DejaVu Sans", 1, 14)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/cart_remove.png"))); // NOI18N
         jButton2.setText("Devolução");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -120,9 +132,9 @@ public class Menu extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(196, Short.MAX_VALUE)
+                .addContainerGap(252, Short.MAX_VALUE)
                 .addComponent(jLabel2)
-                .addContainerGap(177, Short.MAX_VALUE))
+                .addContainerGap(234, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -454,7 +466,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-       new ConsultarFilme().setVisible(true);
+        new ConsultarFilme().setVisible(true);
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
@@ -478,31 +490,31 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
-      new ConsultarCategoria().setVisible(true);
+        new ConsultarCategoria().setVisible(true);
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
-       new ConsultarClassificacao().setVisible(true);
+        new ConsultarClassificacao().setVisible(true);
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
-       new AlterarDVD().setVisible(true);
+        new AlterarDVD().setVisible(true);
     }//GEN-LAST:event_jMenuItem16ActionPerformed
 
     private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
-       new AlterarCategoria().setVisible(true);
+        new AlterarCategoria().setVisible(true);
     }//GEN-LAST:event_jMenuItem17ActionPerformed
 
     private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
-       new AlterarClassificacao().setVisible(true);
+        new AlterarClassificacao().setVisible(true);
     }//GEN-LAST:event_jMenuItem18ActionPerformed
 
     private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem22ActionPerformed
-       new ExcluirDVD().setVisible(true);
+        new ExcluirDVD().setVisible(true);
     }//GEN-LAST:event_jMenuItem22ActionPerformed
 
     private void jMenuItem23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem23ActionPerformed
-      new ExcluirCategoria().setVisible(true);
+        new ExcluirCategoria().setVisible(true);
     }//GEN-LAST:event_jMenuItem23ActionPerformed
 
     private void jMenuItem24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem24ActionPerformed
@@ -513,6 +525,14 @@ public class Menu extends javax.swing.JFrame {
         Funcionario func = new Funcionario();
         itemUser.setText(Login.userLogado.nome);
     }//GEN-LAST:event_formWindowOpened
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        new ControleLocacao().setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        new ConsultaDevolucao().setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

@@ -5,6 +5,24 @@
  */
 package Locacao;
 
+import DAO.AluguelDAO;
+import DAO.CategoriaDAO;
+import DAO.ClassificacaoDAO;
+import DAO.ClienteDAO;
+import DAO.DVDDAO;
+import DAO.FilmeDAO;
+import Modelo.Aluguel;
+import Modelo.Cliente;
+import Modelo.DVD;
+import Modelo.Filme;
+import java.awt.Image;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Familia
@@ -14,8 +32,24 @@ public class ControleLocacao extends javax.swing.JFrame {
     /**
      * Creates new form ControleLocacao
      */
+    DVDDAO dvddao = new DVDDAO();
+    FilmeDAO filmedao = new FilmeDAO();
+    CategoriaDAO catdao = new CategoriaDAO();
+    ClassificacaoDAO clasdao = new ClassificacaoDAO();
+    ClienteDAO clientedao = new ClienteDAO();
+    AluguelDAO alugueldao = new AluguelDAO();
+
+    public int idCategoriaFilme;
+    public int idClassificaoFilme;
+    public int idCliente;
+
     public ControleLocacao() {
         initComponents();
+        atualizarData();
+        atualizarComboBox();
+
+        String nomeCliente = jCNomeCliente.getSelectedItem().toString();
+        idCliente = clientedao.retornarIdClinte(nomeCliente);
     }
 
     /**
@@ -27,21 +61,543 @@ public class ControleLocacao extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jPanel3 = new javax.swing.JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        txtCodDvd = new javax.swing.JTextField();
+        btnBusca = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtHoras = new javax.swing.JTextField();
+        txtTitulo = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtCategoria = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        txtClassificacao = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txtValorAluguel = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jCNomeCliente = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
+        jFDataLocacao = new javax.swing.JFormattedTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jFDataDevolucao = new javax.swing.JFormattedTextField();
+        btnPegarDtAtual = new javax.swing.JButton();
+        btnLimpar = new javax.swing.JButton();
+        btnCadastrar = new javax.swing.JButton();
+        btnSair = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        lbCapa = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        txtCodAluguel = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        txtIdDvd = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        txtIdCliente = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTTabelaConsulta = new javax.swing.JTable();
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("PTQX Locadora");
+        setResizable(false);
+
+        jTabbedPane1.setBackground(new java.awt.Color(51, 102, 255));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel1.setText("Código do DVD");
+
+        btnBusca.setBackground(new java.awt.Color(255, 255, 255));
+        btnBusca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/magnifier.png"))); // NOI18N
+        btnBusca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscaActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Título");
+
+        jLabel3.setText("Horas");
+
+        txtTitulo.setEditable(false);
+
+        jLabel4.setText("Categoria");
+
+        txtCategoria.setEditable(false);
+
+        jLabel5.setText("Classificação");
+
+        txtClassificacao.setEditable(false);
+
+        jLabel6.setText("Valor do Aluguel");
+
+        jLabel7.setText("Cliente");
+
+        jCNomeCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCNomeClienteActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Data da Locação");
+
+        try {
+            jFDataLocacao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        jLabel9.setText("Data da Devolução");
+
+        try {
+            jFDataDevolucao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        btnPegarDtAtual.setBackground(new java.awt.Color(255, 255, 255));
+        btnPegarDtAtual.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/calendar.png"))); // NOI18N
+        btnPegarDtAtual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPegarDtAtualActionPerformed(evt);
+            }
+        });
+
+        btnLimpar.setBackground(new java.awt.Color(0, 102, 255));
+        btnLimpar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnLimpar.setForeground(new java.awt.Color(255, 255, 255));
+        btnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/pencil.png"))); // NOI18N
+        btnLimpar.setText("Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
+
+        btnCadastrar.setBackground(new java.awt.Color(0, 102, 255));
+        btnCadastrar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnCadastrar.setForeground(new java.awt.Color(255, 255, 255));
+        btnCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/btn-salvar.png"))); // NOI18N
+        btnCadastrar.setText("Cadastrar");
+        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadastrarActionPerformed(evt);
+            }
+        });
+
+        btnSair.setBackground(new java.awt.Color(0, 102, 255));
+        btnSair.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnSair.setForeground(new java.awt.Color(255, 255, 255));
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/sair-menu-2.png"))); // NOI18N
+        btnSair.setText("Cancelar");
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
+            }
+        });
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(lbCapa, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lbCapa, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jCNomeCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtValorAluguel))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtClassificacao))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTitulo))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCodDvd, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBusca)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jFDataLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnLimpar))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jFDataDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnPegarDtAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addComponent(btnCadastrar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnSair)))))
+                .addGap(29, 29, 29)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(txtCodDvd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBusca)
+                            .addComponent(jLabel3)
+                            .addComponent(txtHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5)
+                            .addComponent(txtClassificacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(txtValorAluguel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(jCNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(jFDataLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9)
+                            .addComponent(jFDataDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnPegarDtAtual))
+                        .addGap(49, 49, 49)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnLimpar)
+                            .addComponent(btnCadastrar)
+                            .addComponent(btnSair))))
+                .addContainerGap(89, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Cadastrar", jPanel1);
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel10.setText("Pesquisa por Código");
+
+        txtCodAluguel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCodAluguelKeyPressed(evt);
+            }
+        });
+
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/magnifier.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setText("Pesquisa por DVD");
+
+        txtIdDvd.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtIdDvdKeyPressed(evt);
+            }
+        });
+
+        jButton2.setBackground(new java.awt.Color(255, 255, 255));
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/magnifier.png"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setBackground(new java.awt.Color(255, 255, 255));
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/magnifier.png"))); // NOI18N
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        txtIdCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtIdClienteKeyPressed(evt);
+            }
+        });
+
+        jLabel12.setText("Pesquisa por Cliente");
+
+        jButton4.setBackground(new java.awt.Color(0, 102, 255));
+        jButton4.setForeground(new java.awt.Color(255, 255, 255));
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/magnifier.png"))); // NOI18N
+        jButton4.setText("TODOS");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jTTabelaConsulta.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "DVD", "Cliente", "Horário", "Locação", "Devolução"
+            }
+        ));
+        jScrollPane1.setViewportView(jTTabelaConsulta);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtCodAluguel, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtIdDvd, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
+                        .addComponent(jButton4)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(txtCodAluguel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1)
+                    .addComponent(jLabel11)
+                    .addComponent(txtIdDvd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2)
+                    .addComponent(jLabel12)
+                    .addComponent(txtIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Consultar", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaActionPerformed
+        boolean erro = false;
+        int codDvd = 0;
+
+        if (!txtCodDvd.getText().equals("")) {
+
+            codDvd = Integer.parseInt(txtCodDvd.getText());
+
+            if (dvddao.testarDvd(codDvd)) {
+                if (dvddao.verificarSituacao(codDvd)) {
+                    for (DVD d : dvddao.resgatarDadosDvd(codDvd)) {
+                        txtTitulo.setText(d.getTituloFilme());
+
+                        String capa = filmedao.recuperarCapaFilme(txtTitulo.getText());
+                        int idFilme = filmedao.recuperarIdFilme(txtTitulo.getText());
+                        recuperarDadosFilme(idFilme);
+
+                        txtCategoria.setText(catdao.resgatarNomeCategoria(idCategoriaFilme));
+                        txtClassificacao.setText(clasdao.resgatarNomeClassi(idClassificaoFilme));
+
+                        atualizarCapaFilme(capa);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Esse DVD já está alugado", "PTQX Locadora",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Nenhum DVD com esse código foi encontrado", "PTQX Locadora",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Preencha o campo código do DVD", "PTQX Locadora",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+
+
+    }//GEN-LAST:event_btnBuscaActionPerformed
+
+    private void btnPegarDtAtualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPegarDtAtualActionPerformed
+        Date date = new Date();
+        SimpleDateFormat data = new SimpleDateFormat("dd/MM/yyyy");
+        jFDataDevolucao.setText(data.format(date));
+    }//GEN-LAST:event_btnPegarDtAtualActionPerformed
+
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnSairActionPerformed
+
+    private void jCNomeClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCNomeClienteActionPerformed
+        String nomeCliente = jCNomeCliente.getSelectedItem().toString();
+        idCliente = clientedao.retornarIdClinte(nomeCliente);
+    }//GEN-LAST:event_jCNomeClienteActionPerformed
+
+    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+
+        if (txtHoras.getText().equals("") || txtValorAluguel.getText().equals("") || jFDataDevolucao.getText().length() < 10
+                || jFDataLocacao.getText().length() < 10 || txtCodDvd.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos", "PTQX Locadora",
+                    JOptionPane.WARNING_MESSAGE);
+        } else {
+            Aluguel aluguel = new Aluguel();
+            aluguel.setIdCliente(idCliente);
+            aluguel.setIdDvd(Integer.parseInt(txtCodDvd.getText()));
+            aluguel.setHora(txtHoras.getText());
+            aluguel.setDataAluguel(jFDataLocacao.getText());
+            aluguel.setDataDevolucao(jFDataDevolucao.getText());
+
+            alugueldao.cadastrarNovoAluguel(aluguel);
+            dvddao.mudarSituacao(Integer.parseInt(txtCodDvd.getText()), "Alugado");
+
+            limparCampos();
+            lbCapa.setIcon(null);
+        }
+
+
+    }//GEN-LAST:event_btnCadastrarActionPerformed
+
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        limparCampos();
+    }//GEN-LAST:event_btnLimparActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        mostrarTodos();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        buscarPorIdAluguel();
+        txtCodAluguel.setText("");
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtCodAluguelKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodAluguelKeyPressed
+        if (evt.getKeyCode() == 10) {
+            buscarPorIdAluguel();
+            txtCodAluguel.setText("");
+        }
+    }//GEN-LAST:event_txtCodAluguelKeyPressed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        buscarPorIdDvd();
+        txtIdDvd.setText("");
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtIdDvdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdDvdKeyPressed
+        if (evt.getKeyCode() == 10) {
+            buscarPorIdDvd();
+            txtIdDvd.setText("");
+        }
+    }//GEN-LAST:event_txtIdDvdKeyPressed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        buscarPorIdDvd();
+        txtIdCliente.setText("");
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void txtIdClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdClienteKeyPressed
+        if (evt.getKeyCode() == 10) {
+            buscarPorIdDvd();
+            txtIdCliente.setText("");
+        }
+    }//GEN-LAST:event_txtIdClienteKeyPressed
 
     /**
      * @param args the command line arguments
@@ -79,5 +635,179 @@ public class ControleLocacao extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBusca;
+    private javax.swing.JButton btnCadastrar;
+    private javax.swing.JButton btnLimpar;
+    private javax.swing.JButton btnPegarDtAtual;
+    private javax.swing.JButton btnSair;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JComboBox<Object> jCNomeCliente;
+    private javax.swing.JFormattedTextField jFDataDevolucao;
+    private javax.swing.JFormattedTextField jFDataLocacao;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTTabelaConsulta;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel lbCapa;
+    private javax.swing.JTextField txtCategoria;
+    private javax.swing.JTextField txtClassificacao;
+    private javax.swing.JTextField txtCodAluguel;
+    private javax.swing.JTextField txtCodDvd;
+    private javax.swing.JTextField txtHoras;
+    private javax.swing.JTextField txtIdCliente;
+    private javax.swing.JTextField txtIdDvd;
+    private javax.swing.JTextField txtTitulo;
+    private javax.swing.JTextField txtValorAluguel;
     // End of variables declaration//GEN-END:variables
+
+    public void atualizarData() {
+        Date date = new Date();
+        SimpleDateFormat data = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat hora = new SimpleDateFormat("hh:mm");
+        txtHoras.setText(hora.format(date));
+        jFDataLocacao.setText(data.format(date));
+    }
+
+    public void setCapaPadrao() {
+        ImageIcon icone = new javax.swing.ImageIcon(getClass().getResource("/Icons/logodvd.png"));
+        lbCapa.setIcon(new ImageIcon(icone.getImage().getScaledInstance(lbCapa.getWidth(),
+                lbCapa.getHeight(), Image.SCALE_DEFAULT)));
+    }
+
+    public void atualizarCapaFilme(String nomeCapa) {
+        String caminho = "c:/Locadora/Pictures/" + nomeCapa;
+
+        File file = new File(caminho);
+
+        if (file.exists()) {
+            ImageIcon image = new ImageIcon(caminho);
+            lbCapa.setIcon(new ImageIcon(image.getImage().getScaledInstance(lbCapa.getWidth(),
+                    lbCapa.getHeight(), Image.SCALE_DEFAULT)));
+        } else {
+            ImageIcon icone = new javax.swing.ImageIcon(getClass().getResource("/Icons/semcapa.png"));
+            lbCapa.setIcon(new ImageIcon(icone.getImage().getScaledInstance(lbCapa.getWidth(),
+                    lbCapa.getHeight(), Image.SCALE_DEFAULT)));
+        }
+
+    }
+
+    public String regastarNomeCategoria(int idCategoria) {
+        return catdao.resgatarNomeCategoria(idCategoria);
+    }
+
+    public void recuperarDadosFilme(int codFilme) {
+        for (Filme f : filmedao.resgatarDadosFilme(codFilme)) {
+            idCategoriaFilme = f.getIdCategoria();
+            idClassificaoFilme = f.getIdClassificacao();
+        }
+    }
+
+    public void atualizarComboBox() {
+        for (Cliente c : clientedao.listarNomeClientes()) {
+            jCNomeCliente.addItem(c.getNome());
+        }
+    }
+
+    public void limparCampos() {
+
+        txtCodDvd.setText("");
+        txtTitulo.setText("");
+        txtCategoria.setText("");
+        txtClassificacao.setText("");
+        txtValorAluguel.setText("");
+        jFDataDevolucao.setText("");
+    }
+
+    public void mostrarTodos() {
+        DefaultTableModel tabela = (DefaultTableModel) jTTabelaConsulta.getModel();
+        tabela.setNumRows(0);
+
+        for (Aluguel a : alugueldao.mostrarTodosAlugueis()) {
+            int idCliente = a.getIdCliente();
+            String nomeCliente = clientedao.mostrarNomeCliente(idCliente);
+            tabela.addRow(new Object[]{
+                a.getIdAluguel(),
+                a.getIdDvd(),
+                nomeCliente,
+                a.getHora(),
+                a.getDataAluguel(),
+                a.getDataDevolucao()
+            });
+        }
+    }
+
+    public void buscarPorIdAluguel() {
+        DefaultTableModel tabela = (DefaultTableModel) jTTabelaConsulta.getModel();
+        tabela.setNumRows(0);
+        int idAluguel = Integer.parseInt(txtCodAluguel.getText());
+
+        for (Aluguel a : alugueldao.buscarPorIdAluguel(idAluguel)) {
+            int idCliente = a.getIdCliente();
+            String nomeCliente = clientedao.mostrarNomeCliente(idCliente);
+            tabela.addRow(new Object[]{
+                a.getIdAluguel(),
+                a.getIdDvd(),
+                nomeCliente,
+                a.getHora(),
+                a.getDataAluguel(),
+                a.getDataDevolucao()
+            });
+        }
+    }
+
+    public void buscarPorIdCliente() {
+        DefaultTableModel tabela = (DefaultTableModel) jTTabelaConsulta.getModel();
+        tabela.setNumRows(0);
+        int idDvd = Integer.parseInt(txtIdDvd.getText());
+
+        for (Aluguel a : alugueldao.buscarPorIdDvd(idDvd)) {
+            int idCliente = a.getIdCliente();
+            String nomeCliente = clientedao.mostrarNomeCliente(idCliente);
+            tabela.addRow(new Object[]{
+                a.getIdAluguel(),
+                a.getIdDvd(),
+                nomeCliente,
+                a.getHora(),
+                a.getDataAluguel(),
+                a.getDataDevolucao()
+            });
+        }
+    }
+
+    public void buscarPorIdDvd() {
+        DefaultTableModel tabela = (DefaultTableModel) jTTabelaConsulta.getModel();
+        tabela.setNumRows(0);
+        int idDvd = Integer.parseInt(txtIdDvd.getText());
+
+        for (Aluguel a : alugueldao.buscarPorIdDvd(idDvd)) {
+            int idCliente = a.getIdCliente();
+            String nomeCliente = clientedao.mostrarNomeCliente(idCliente);
+            tabela.addRow(new Object[]{
+                a.getIdAluguel(),
+                a.getIdDvd(),
+                nomeCliente,
+                a.getHora(),
+                a.getDataAluguel(),
+                a.getDataDevolucao()
+            });
+        }
+    }
 }

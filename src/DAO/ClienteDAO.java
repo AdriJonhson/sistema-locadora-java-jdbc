@@ -313,20 +313,72 @@ public class ClienteDAO {
         try {
             stmt = con.prepareStatement("DELETE FROM cliente WHERE idCliente = ?");
             stmt.setInt(1, idCliente);
-            
+
             if (stmt.executeUpdate() > 0) {
                 JOptionPane.showMessageDialog(null, "Cliente deletado com sucesso", "PTQX Locadora",
                         JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "Erro ao tentar excluir o cliente, tente novamente.",
-                        "PTQX Locadora",JOptionPane.ERROR_MESSAGE);
+                        "PTQX Locadora", JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Esse cliente possui um DVD alugado",
-                        "PTQX Locadora",JOptionPane.ERROR_MESSAGE);
+                    "PTQX Locadora", JOptionPane.ERROR_MESSAGE);
         } finally {
             Conexao.closeConnection(con, stmt);
         }
+    }
+
+    public List<Cliente> listarNomeClientes() {
+        List<Cliente> lista = new ArrayList<>();
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = con.prepareStatement("SELECT idCliente, nome FROM cliente");
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Cliente cliente = new Cliente();
+                cliente.setId(rs.getInt("idCliente"));
+                cliente.setNome(rs.getString("nome"));
+                lista.add(cliente);
+
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("ClienteDAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+
+        return lista;
+    }
+
+    public int retornarIdClinte(String nome){
+        int idCliente = 0;
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = con.prepareStatement("SELECT idCliente FROM cliente WHERE nome LIKE ?");
+            stmt.setString(1, '%'+nome+'%');
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                idCliente = rs.getInt("idCliente");
+
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("ClienteDAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+
+        return idCliente;
     }
 }

@@ -273,7 +273,6 @@ public class DVDDAO {
             Conexao.closeConnection(con, stmt, rs);
         }
 
-
         return lista;
     }
 
@@ -304,33 +303,104 @@ public class DVDDAO {
         return titulo;
     }
 
-    public void excluirDvd(int idDvd){
+    public void excluirDvd(int idDvd) {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
-        
-        try{
+
+        try {
             stmt = con.prepareStatement("DELETE FROM dvd WHERE iddvd = ?");
             stmt.setInt(1, idDvd);
-            
+
             if (stmt.executeUpdate() > 0) {
                 JOptionPane.showMessageDialog(null, "DVD deletado com sucesso", "PTQX Locadora",
                         JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "Erro ao tentar excluir o DVD, tente novamente.",
-                        "PTQX Locadora",JOptionPane.ERROR_MESSAGE);
+                        "PTQX Locadora", JOptionPane.ERROR_MESSAGE);
             }
-            
-            
-        }catch(SQLException ex){
+
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Esse DVD está alugado, logo não é possível exclui-lo",
                     "PTQX Locadora", JOptionPane.ERROR_MESSAGE);
-        }finally{
+        } finally {
             Conexao.closeConnection(con, stmt);
         }
-        
-        
-        
-        
-        
+
     }
+
+    public boolean testarDvd(int codDvd) {
+        boolean existe = false;
+
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = con.prepareStatement("SELECT iddvd FROM dvd WHERE iddvd = ?");
+            stmt.setInt(1, codDvd);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                existe = true;
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("DVDDAO:" + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+
+        return existe;
+    }
+
+    public void mudarSituacao(int idDvd, String status) {
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = con.prepareStatement("UPDATE dvd SET situacao = ? WHERE iddvd = ?");
+            stmt.setString(1, status);
+            stmt.setInt(2, idDvd);
+
+            if (stmt.executeUpdate() > 0) {
+                System.out.println("Ok");
+            } else {
+                System.err.println("Erro");
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("FilmeDAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt);
+        }
+    }
+
+    public boolean verificarSituacao(int idDvd) {
+        boolean disponivel = false;
+
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try {
+            stmt = con.prepareStatement("SELECT * FROM dvd WHERE iddvd = ?");
+            stmt.setInt(1, idDvd);
+            
+            rs = stmt.executeQuery();
+            
+            while(rs.next()){
+                if(rs.getString("situacao").equals("Disponível")){
+                    disponivel = true;
+                }
+            }
+            
+        } catch (SQLException ex) {
+            System.err.println("FilmeDAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt);
+        }
+
+        return disponivel;
+    }
+
 }
