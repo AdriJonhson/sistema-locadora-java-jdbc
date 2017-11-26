@@ -5,6 +5,10 @@
  */
 package Visao.Consultar;
 
+import DAO.FuncionarioDAO;
+import Modelo.Funcionario;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Familia
@@ -14,6 +18,8 @@ public class ConsultarFuncionario extends javax.swing.JFrame {
     /**
      * Creates new form ConsultarFuncionario
      */
+    FuncionarioDAO funcdao = new FuncionarioDAO();
+
     public ConsultarFuncionario() {
         initComponents();
     }
@@ -27,21 +33,191 @@ public class ConsultarFuncionario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        txtBuscaNome = new javax.swing.JTextField();
+        btnBuscarNome = new javax.swing.JButton();
+        txtBuscaCodigo = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        btnBuscarCodigo = new javax.swing.JButton();
+        btnBuscaTodos = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTTabelaConsulta = new javax.swing.JTable();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("PTQX Locadora");
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/Icons/if_video_1054941.png")).getImage());
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel2.setBackground(new java.awt.Color(0, 102, 255));
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Consulta de Filmes");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(38, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(41, Short.MAX_VALUE))
+        );
+
+        jLabel2.setText("Pesquisar por nome");
+
+        txtBuscaNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBuscaNomeKeyPressed(evt);
+            }
+        });
+
+        btnBuscarNome.setBackground(new java.awt.Color(0, 102, 255));
+        btnBuscarNome.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscarNome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/magnifier.png"))); // NOI18N
+        btnBuscarNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarNomeActionPerformed(evt);
+            }
+        });
+
+        txtBuscaCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBuscaCodigoKeyPressed(evt);
+            }
+        });
+
+        jLabel3.setText("Pesquisa por código");
+
+        btnBuscarCodigo.setBackground(new java.awt.Color(0, 102, 255));
+        btnBuscarCodigo.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscarCodigo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/magnifier.png"))); // NOI18N
+        btnBuscarCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarCodigoActionPerformed(evt);
+            }
+        });
+
+        btnBuscaTodos.setBackground(new java.awt.Color(0, 102, 255));
+        btnBuscaTodos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnBuscaTodos.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscaTodos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/magnifier.png"))); // NOI18N
+        btnBuscaTodos.setText("Todos");
+        btnBuscaTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscaTodosActionPerformed(evt);
+            }
+        });
+
+        jTTabelaConsulta.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Nome"
+            }
+        ));
+        jScrollPane1.setViewportView(jTTabelaConsulta);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtBuscaNome, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBuscarNome, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtBuscaCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBuscarCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                        .addComponent(btnBuscaTodos)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(txtBuscaNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtBuscaCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3))
+                    .addComponent(btnBuscarNome)
+                    .addComponent(btnBuscarCodigo)
+                    .addComponent(btnBuscaTodos))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtBuscaNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscaNomeKeyPressed
+        if (evt.getKeyCode() == 10) {
+            buscarNome();
+            txtBuscaNome.setText("");
+        }
+    }//GEN-LAST:event_txtBuscaNomeKeyPressed
+
+    private void btnBuscarNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarNomeActionPerformed
+        buscarNome();
+        txtBuscaNome.setText("");
+    }//GEN-LAST:event_btnBuscarNomeActionPerformed
+
+    private void txtBuscaCodigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscaCodigoKeyPressed
+        if (evt.getKeyCode() == 10) {
+            buscarId();
+            txtBuscaCodigo.setText("");
+        }
+    }//GEN-LAST:event_txtBuscaCodigoKeyPressed
+
+    private void btnBuscarCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCodigoActionPerformed
+        buscarId();
+        txtBuscaCodigo.setText("");
+    }//GEN-LAST:event_btnBuscarCodigoActionPerformed
+
+    private void btnBuscaTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaTodosActionPerformed
+        mostrarTodos();
+    }//GEN-LAST:event_btnBuscaTodosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -80,5 +256,54 @@ public class ConsultarFuncionario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscaTodos;
+    private javax.swing.JButton btnBuscarCodigo;
+    private javax.swing.JButton btnBuscarNome;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTTabelaConsulta;
+    private javax.swing.JTextField txtBuscaCodigo;
+    private javax.swing.JTextField txtBuscaNome;
     // End of variables declaration//GEN-END:variables
+
+    public void mostrarTodos() {
+        DefaultTableModel tabela = (DefaultTableModel) jTTabelaConsulta.getModel();
+        tabela.setNumRows(0);
+
+        for (Funcionario f : funcdao.mostrarTodos()) {
+            tabela.addRow(new Object[]{
+                f.getId(),
+                f.getNome()
+            });
+        }
+    }
+
+    public void buscarId() {
+        DefaultTableModel tabela = (DefaultTableModel) jTTabelaConsulta.getModel();
+        tabela.setNumRows(0);
+        int id = Integer.parseInt(txtBuscaCodigo.getText());
+        for (Funcionario f : funcdao.buscarId(id)) {
+            tabela.addRow(new Object[]{
+                f.getId(),
+                f.getNome()
+            });
+        }
+
+    }
+
+    public void buscarNome() {
+        DefaultTableModel tabela = (DefaultTableModel) jTTabelaConsulta.getModel();
+        tabela.setNumRows(0);
+        String nome = txtBuscaNome.getText();
+        for (Funcionario f : funcdao.buscarNome(nome)) {
+            tabela.addRow(new Object[]{
+                f.getId(),
+                f.getNome()
+            });
+        }
+    }
 }

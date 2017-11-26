@@ -49,6 +49,7 @@ public class ConsultarClassificacao extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("PTQX Locadora ");
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/Icons/if_video_1054941.png")).getImage());
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 255));
 

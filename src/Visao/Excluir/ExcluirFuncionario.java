@@ -5,17 +5,25 @@
  */
 package Visao.Excluir;
 
+import DAO.ClienteDAO;
+import DAO.FuncionarioDAO;
+import Modelo.Cliente;
+import Modelo.Funcionario;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Familia
  */
 public class ExcluirFuncionario extends javax.swing.JFrame {
+    FuncionarioDAO dao = new FuncionarioDAO();
 
     /**
      * Creates new form ExcluirFuncionario
      */
     public ExcluirFuncionario() {
         initComponents();
+        atualizarComboBox();
     }
 
     /**
@@ -27,23 +35,148 @@ public class ExcluirFuncionario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jTextField1 = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        SelectCodigo = new javax.swing.JComboBox();
+        jLabel3 = new javax.swing.JLabel();
+        InpNome = new javax.swing.JTextField();
+        BtnExcluir = new javax.swing.JButton();
+
+        jTextField1.setText("jTextField1");
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("PTQX Locadora - Excluir Funcionário");
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/Icons/if_video_1054941.png")).getImage());
+        setResizable(false);
+
+        jPanel1.setBackground(new java.awt.Color(0, 102, 255));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Excluir Funcionário");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Código Funcionário");
+
+        SelectCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SelectCodigoActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Nome do Funcionário");
+
+        InpNome.setEditable(false);
+        InpNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InpNomeActionPerformed(evt);
+            }
+        });
+
+        BtnExcluir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        BtnExcluir.setForeground(new java.awt.Color(0, 102, 255));
+        BtnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/btn-excluir.png"))); // NOI18N
+        BtnExcluir.setText("Excluir");
+        BtnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnExcluirActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(219, 219, 219)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(SelectCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(8, 8, 8)
+                        .addComponent(InpNome, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(BtnExcluir)))
+                .addContainerGap(33, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(SelectCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(InpNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnExcluir))
+                .addContainerGap(35, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 643, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 284, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void BtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnExcluirActionPerformed
+        if (InpNome.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Nenhum funcionario para ser deletado", "PTQX Locadora",
+                    JOptionPane.WARNING_MESSAGE);
+        } else {
+            Funcionario funcionario = (Funcionario) SelectCodigo.getSelectedItem();
+            int index = SelectCodigo.getSelectedIndex();
+            int idFuncionario = funcionario.getId();
+            String nome = InpNome.getText();
+
+            int opc = JOptionPane.showConfirmDialog(null, "Realmente deseja excluir o funcionario:\n (" + idFuncionario + ") "
+                    + "(" + nome + ")", "PTQX Locadora", JOptionPane.YES_NO_OPTION);
+
+            if (opc == 0) {
+                dao.excluirFuncionario(idFuncionario);
+                dispose();
+            }
+        }                    
+    }//GEN-LAST:event_BtnExcluirActionPerformed
+
+    private void InpNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InpNomeActionPerformed
+     
+    }//GEN-LAST:event_InpNomeActionPerformed
+
+    private void SelectCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectCodigoActionPerformed
+        Funcionario funcionario = (Funcionario) SelectCodigo.getSelectedItem();
+        int idFuncionario = funcionario.getId();
+       InpNome.setText(dao.mostrarNomeFuncionario(idFuncionario));
+    }//GEN-LAST:event_SelectCodigoActionPerformed
+
+    private void cbCodFuncionarioMousePressed(java.awt.event.MouseEvent evt) {                                          
+      
+    }      
     /**
      * @param args the command line arguments
      */
@@ -81,5 +214,19 @@ public class ExcluirFuncionario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnExcluir;
+    private javax.swing.JTextField InpNome;
+    private javax.swing.JComboBox SelectCodigo;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
+ public void atualizarComboBox() {
+        for (Funcionario f : dao.listarIdFuncionario()) {
+            SelectCodigo.addItem(f);
+        }
+    }
 }

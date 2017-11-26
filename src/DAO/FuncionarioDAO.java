@@ -174,4 +174,144 @@ public class FuncionarioDAO {
             System.err.println("Erro FuncionarioDAO: " + ex);
         }
     }
+
+    public String mostrarNomeFuncionario(int idFuncionario) {
+        String nome = "";
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = con.prepareStatement("SELECT nome FROM funcionario WHERE idFuncionario = ?");
+            stmt.setInt(1, idFuncionario);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                nome = rs.getString("nome");
+            }
+        } catch (SQLException ex) {
+            System.err.println("FuncionarioDAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+
+        return nome;
+    }
+
+    public void excluirFuncionario(int idFuncionario) {
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = con.prepareStatement("DELETE FROM funcionario WHERE idFuncionario = ?");
+            stmt.setInt(1, idFuncionario);
+
+            if (stmt.executeUpdate() > 0) {
+                JOptionPane.showMessageDialog(null, "Funcionario deletado com sucesso", "PTQX Locadora",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao tentar excluir o funcionario, tente novamente.",
+                        "PTQX Locadora", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("FuncionarioDAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt);
+        }
+    }
+
+    public List<Funcionario> mostrarTodos() {
+        List<Funcionario> lista = new ArrayList<>();
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = con.prepareStatement("SELECT idFuncionario, nome FROM funcionario");
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Funcionario f = new Funcionario();
+                f.setNome(rs.getString("nome"));
+                f.setId(rs.getInt("idFuncionario"));
+
+                lista.add(f);
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("FuncionarioDAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+        return lista;
+    }
+
+    public List<Funcionario> buscarId(int idFuncionario) {
+        boolean achou = false;
+        List<Funcionario> lista = new ArrayList<>();
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = con.prepareStatement("SELECT idFuncionario, nome FROM funcionario WHERE idFuncionario = ?");
+            stmt.setInt(1, idFuncionario);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Funcionario f = new Funcionario();
+                f.setNome(rs.getString("nome"));
+                f.setId(rs.getInt("idFuncionario"));
+                achou = true;
+                lista.add(f);
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("FuncionarioDAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+        
+        if(!achou){
+            JOptionPane.showMessageDialog(null, "Nenhum funcionário com esse código foi encontrado",
+                    "PTQX Locadora", JOptionPane.WARNING_MESSAGE);
+        }
+        
+        return lista;
+    }
+    
+    public List<Funcionario> buscarNome(String nome) {
+        boolean achou = false;
+        List<Funcionario> lista = new ArrayList<>();
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = con.prepareStatement("SELECT idFuncionario, nome FROM funcionario WHERE nome LIKE ?");
+            stmt.setString(1, '%'+nome+'%');
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Funcionario f = new Funcionario();
+                f.setNome(rs.getString("nome"));
+                f.setId(rs.getInt("idFuncionario"));
+                achou = true;
+                lista.add(f);
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("FuncionarioDAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+        
+        if(!achou){
+            JOptionPane.showMessageDialog(null, "Nenhum funcionário com esse nome foi encontrado",
+                    "PTQX Locadora", JOptionPane.WARNING_MESSAGE);
+        }
+        
+        return lista;
+    }
 }

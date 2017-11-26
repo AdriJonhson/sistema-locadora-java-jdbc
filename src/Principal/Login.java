@@ -31,7 +31,7 @@ public class Login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Locadora Java - Login");
-        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/Icons/user.png")).getImage());
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/Icons/if_video_1054941.png")).getImage());
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -86,6 +86,7 @@ public class Login extends javax.swing.JFrame {
         btnEntrar.setForeground(new java.awt.Color(255, 255, 255));
         btnEntrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/login.png"))); // NOI18N
         btnEntrar.setText("Entrar");
+        btnEntrar.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         btnEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEntrarActionPerformed(evt);

@@ -51,6 +51,7 @@ public class ConsultarDVD extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("PTQX Locadora - Consulta de DVD");
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/Icons/if_video_1054941.png")).getImage());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
