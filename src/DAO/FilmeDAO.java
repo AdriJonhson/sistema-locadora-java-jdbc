@@ -331,7 +331,7 @@ public class FilmeDAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Não é possível excluir esse filme, pois existe um DVD atrelado"
                     + " ao mesmo", "PTQX Locadora",
-                        JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.WARNING_MESSAGE);
         } finally {
             Conexao.closeConnection(con, stmt);
         }
@@ -382,6 +382,51 @@ public class FilmeDAO {
 
         return idFilme;
     }
+
+    public int recuperarIdCategoria(String tituloFilme) {
+        int idCategoria = 0;
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = con.prepareStatement("SELECT idcategoria FROM filme WHERE titulo LIKE ?");
+            stmt.setString(1, "%" + tituloFilme + "%");
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                idCategoria = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            System.err.println("FilmeDAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+
+        return idCategoria;
+    }
     
-    
+    public int recuperarIdClassificacao(String tituloFilme) {
+        int idClass = 0;
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = con.prepareStatement("SELECT idclassificacao FROM filme WHERE titulo LIKE ?");
+            stmt.setString(1, "%" + tituloFilme + "%");
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                idClass = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            System.err.println("FilmeDAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+
+        return idClass;
+    }
+
 }

@@ -1,7 +1,6 @@
 package Principal;
 
-import Locacao.ConsultaDevolucao;
-import Locacao.ControleLocacao;
+import Locacao.*;
 import Modelo.Funcionario;
 import javax.swing.Box;
 import javax.swing.JOptionPane;

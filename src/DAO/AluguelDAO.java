@@ -24,7 +24,7 @@ public class AluguelDAO {
             stmt.setString(5, aluguel.getDataDevolucao());
 
             if (stmt.executeUpdate() >= 1) {
-                JOptionPane.showMessageDialog(null, "Aluguel cadastrado com sucesso", "PTQX Locadora",
+                JOptionPane.showMessageDialog(null, "Aluguel realizado com sucesso", "PTQX Locadora",
                         JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "Erro ao tentar cadastrar o aluguel", "PTQX Locadora",
@@ -78,7 +78,7 @@ public class AluguelDAO {
         try {
             stmt = con.prepareStatement("SELECT * FROM aluguel WHERE idaluguel = ?");
             stmt.setInt(1, idAluguel);
-            
+
             rs = stmt.executeQuery();
             while (rs.next()) {
                 Aluguel aluguel = new Aluguel();
@@ -88,13 +88,13 @@ public class AluguelDAO {
                 aluguel.setHora(rs.getString("hora_aluguel"));
                 aluguel.setDataAluguel(rs.getString("data_aluguel"));
                 aluguel.setDataDevolucao(rs.getString("data_devolucao"));
-                
+
                 lista.add(aluguel);
                 existe = true;
             }
-            
-            if(!existe){
-                JOptionPane.showMessageDialog(null, "Aluguel não encontrado", "PTQX Locadora", 
+
+            if (!existe) {
+                JOptionPane.showMessageDialog(null, "Aluguel não encontrado", "PTQX Locadora",
                         JOptionPane.WARNING_MESSAGE);
             }
         } catch (SQLException ex) {
@@ -116,7 +116,7 @@ public class AluguelDAO {
         try {
             stmt = con.prepareStatement("SELECT * FROM aluguel WHERE iddvd = ?");
             stmt.setInt(1, idDvd);
-            
+
             rs = stmt.executeQuery();
             while (rs.next()) {
                 Aluguel aluguel = new Aluguel();
@@ -126,13 +126,13 @@ public class AluguelDAO {
                 aluguel.setHora(rs.getString("hora_aluguel"));
                 aluguel.setDataAluguel(rs.getString("data_aluguel"));
                 aluguel.setDataDevolucao(rs.getString("data_devolucao"));
-                
+
                 lista.add(aluguel);
                 existe = true;
             }
-            
-            if(!existe){
-                JOptionPane.showMessageDialog(null, "Aluguel não encontrado", "PTQX Locadora", 
+
+            if (!existe) {
+                JOptionPane.showMessageDialog(null, "Aluguel não encontrado", "PTQX Locadora",
                         JOptionPane.WARNING_MESSAGE);
             }
         } catch (SQLException ex) {
@@ -154,7 +154,7 @@ public class AluguelDAO {
         try {
             stmt = con.prepareStatement("SELECT * FROM aluguel WHERE idcliente = ?");
             stmt.setInt(1, idCliente);
-            
+
             rs = stmt.executeQuery();
             while (rs.next()) {
                 Aluguel aluguel = new Aluguel();
@@ -164,13 +164,13 @@ public class AluguelDAO {
                 aluguel.setHora(rs.getString("hora_aluguel"));
                 aluguel.setDataAluguel(rs.getString("data_aluguel"));
                 aluguel.setDataDevolucao(rs.getString("data_devolucao"));
-                
+
                 lista.add(aluguel);
                 existe = true;
             }
-            
-            if(!existe){
-                JOptionPane.showMessageDialog(null, "Aluguel não encontrado", "PTQX Locadora", 
+
+            if (!existe) {
+                JOptionPane.showMessageDialog(null, "Aluguel não encontrado", "PTQX Locadora",
                         JOptionPane.WARNING_MESSAGE);
             }
         } catch (SQLException ex) {
@@ -182,7 +182,51 @@ public class AluguelDAO {
         return lista;
     }
 
-    
+    public void renovarAluguel(int idAluguel, String data) {
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
 
+        try {
+            stmt = con.prepareStatement("UPDATE aluguel SET data_devolucao = ? WHERE idaluguel = ?");
+            stmt.setString(1, data);
+            stmt.setInt(2, idAluguel);
+            if (stmt.executeUpdate() >= 1) {
+                JOptionPane.showMessageDialog(null, "Renovação realizada!", "PTQX Locadora",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao realizar a renovação", "PTQX Locadora",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            System.err.println("AluguelDAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt);
+        }
+
+    }
+
+    public void devolverDvd(int idAluguel) {
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = con.prepareStatement("DELETE FROM aluguel WHERE idaluguel = ?");
+            stmt.setInt(1, idAluguel);
+
+            if (stmt.executeUpdate() >= 1) {
+                JOptionPane.showMessageDialog(null, "Devolução efetuada com sucesso", "PTQX Locadora",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao realizar a devolução", "PTQX Locadora",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("AluguelDAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt);
+        }
+
+    }
 
 }

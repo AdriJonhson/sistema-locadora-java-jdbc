@@ -330,14 +330,14 @@ public class ClienteDAO {
         }
     }
 
-    public List<Cliente> listarNomeClientes() {
+    public List<Cliente> listarNomeClientes(String sql) {
         List<Cliente> lista = new ArrayList<>();
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
         try {
-            stmt = con.prepareStatement("SELECT idCliente, nome FROM cliente");
+            stmt = con.prepareStatement(sql);
             rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -381,4 +381,8 @@ public class ClienteDAO {
 
         return idCliente;
     }
+
+    
+
+
 }

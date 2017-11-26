@@ -22,15 +22,11 @@ public class ConsultaDevolucao extends javax.swing.JFrame {
      */
     ClienteDAO clientedao = new ClienteDAO();
     AluguelDAO alugueldao = new AluguelDAO();
-    
+
     public int idCliente;
+
     public ConsultaDevolucao() {
         initComponents();
-        atualizarComboBox();
-
-        String nomeCliente = jCNomeCliente.getSelectedItem().toString();
-        idCliente = clientedao.retornarIdClinte(nomeCliente);
-        buscarPorIdCliente(idCliente);
     }
 
     /**
@@ -55,6 +51,11 @@ public class ConsultaDevolucao extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("PTQX Locadora");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -95,9 +96,14 @@ public class ConsultaDevolucao extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Cliente", "DVD", "Horário", "Locação", "Devolução"
+                "Código", "DVD", "Código Cliente", "Horário", "Locação", "Devolução"
             }
         ));
+        jTTabelaConsulta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTTabelaConsultaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTTabelaConsulta);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -151,6 +157,38 @@ public class ConsultaDevolucao extends javax.swing.JFrame {
         buscarPorIdCliente(idCliente);
     }//GEN-LAST:event_jCNomeClienteActionPerformed
 
+    private void jTTabelaConsultaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTTabelaConsultaMouseClicked
+        Integer linha = jTTabelaConsulta.getSelectedRow();
+        Integer idAluguel = (Integer) jTTabelaConsulta.getValueAt(linha, 0);
+        Integer idDvd = (Integer) jTTabelaConsulta.getValueAt(linha, 1);
+        Integer idClienteSelecionado = (Integer) jTTabelaConsulta.getValueAt(linha, 2);
+        String horario = (String) jTTabelaConsulta.getValueAt(linha, 3);
+        String locacao = (String) jTTabelaConsulta.getValueAt(linha, 4);
+        String devolucao = (String) jTTabelaConsulta.getValueAt(linha, 5);
+
+        Dados d = new Dados();
+
+        d.setIdAluguel(idAluguel);
+        d.setIdDvd(idDvd);
+        d.setIdCliente(idClienteSelecionado);
+        d.setNomeCliente(jCNomeCliente.getSelectedItem().toString());
+        d.setHorario(horario);
+        d.setLocacao(locacao);
+        d.setDevolucao(devolucao);
+
+        EfetuarDevolucao dev = new EfetuarDevolucao();
+        dev.receberDados(d);
+        dev.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jTTabelaConsultaMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        atualizarComboBox();
+        String nomeCliente = jCNomeCliente.getSelectedItem().toString();
+        idCliente = clientedao.retornarIdClinte(nomeCliente);
+        buscarPorIdCliente(idCliente);
+    }//GEN-LAST:event_formWindowOpened
+
     /**
      * @param args the command line arguments
      */
@@ -198,25 +236,30 @@ public class ConsultaDevolucao extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     public void atualizarComboBox() {
-        for (Cliente c : clientedao.listarNomeClientes()) {
+        String sql = "SELECT DISTINCT c.nome, c.idCliente FROM cliente AS c JOIN aluguel as a"
+                    + " ON c.idCliente = a.idCliente";
+        for (Cliente c : clientedao.listarNomeClientes(sql)) {
             jCNomeCliente.addItem(c.getNome());
         }
     }
 
     public void buscarPorIdCliente(int idCliente) {
+        int c = 0;
         DefaultTableModel tabela = (DefaultTableModel) jTTabelaConsulta.getModel();
         tabela.setNumRows(0);
-
+        
         for (Aluguel a : alugueldao.buscarPorIdCliente(idCliente)) {
+            jTTabelaConsulta.setEditingRow(c);
             String nomeCliente = clientedao.mostrarNomeCliente(idCliente);
             tabela.addRow(new Object[]{
                 a.getIdAluguel(),
                 a.getIdDvd(),
-                nomeCliente,
+                idCliente,
                 a.getHora(),
                 a.getDataAluguel(),
                 a.getDataDevolucao()
             });
+            c++;
         }
     }
 

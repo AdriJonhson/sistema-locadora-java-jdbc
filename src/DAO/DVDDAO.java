@@ -381,19 +381,19 @@ public class DVDDAO {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        
+
         try {
             stmt = con.prepareStatement("SELECT * FROM dvd WHERE iddvd = ?");
             stmt.setInt(1, idDvd);
-            
+
             rs = stmt.executeQuery();
-            
-            while(rs.next()){
-                if(rs.getString("situacao").equals("Disponível")){
+
+            while (rs.next()) {
+                if (rs.getString("situacao").equals("Disponível")) {
                     disponivel = true;
                 }
             }
-            
+
         } catch (SQLException ex) {
             System.err.println("FilmeDAO: " + ex);
         } finally {
@@ -401,6 +401,31 @@ public class DVDDAO {
         }
 
         return disponivel;
+    }
+
+    public double resgatarPreco(int idDvd) {
+        double valor = 0;
+
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = con.prepareStatement("SELECT preco_compra FROM dvd WHERE iddvd = ?");
+            stmt.setInt(1, idDvd);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                valor = rs.getDouble("preco_compra");
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("DVDDAO: " + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+
+        return valor;
     }
 
 }

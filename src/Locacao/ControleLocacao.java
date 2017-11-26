@@ -45,11 +45,7 @@ public class ControleLocacao extends javax.swing.JFrame {
 
     public ControleLocacao() {
         initComponents();
-        atualizarData();
-        atualizarComboBox();
 
-        String nomeCliente = jCNomeCliente.getSelectedItem().toString();
-        idCliente = clientedao.retornarIdClinte(nomeCliente);
     }
 
     /**
@@ -119,6 +115,11 @@ public class ControleLocacao extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("PTQX Locadora");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jTabbedPane1.setBackground(new java.awt.Color(51, 102, 255));
 
@@ -149,6 +150,8 @@ public class ControleLocacao extends javax.swing.JFrame {
         txtClassificacao.setEditable(false);
 
         jLabel6.setText("Valor do Aluguel");
+
+        txtValorAluguel.setEditable(false);
 
         jLabel7.setText("Cliente");
 
@@ -197,7 +200,7 @@ public class ControleLocacao extends javax.swing.JFrame {
         btnCadastrar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnCadastrar.setForeground(new java.awt.Color(255, 255, 255));
         btnCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/btn-salvar.png"))); // NOI18N
-        btnCadastrar.setText("Cadastrar");
+        btnCadastrar.setText("Concluir");
         btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCadastrarActionPerformed(evt);
@@ -284,7 +287,7 @@ public class ControleLocacao extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnPegarDtAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(23, 23, 23)
+                                .addGap(29, 29, 29)
                                 .addComponent(btnCadastrar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnSair)))))
@@ -489,7 +492,7 @@ public class ControleLocacao extends javax.swing.JFrame {
                 if (dvddao.verificarSituacao(codDvd)) {
                     for (DVD d : dvddao.resgatarDadosDvd(codDvd)) {
                         txtTitulo.setText(d.getTituloFilme());
-
+                        txtValorAluguel.setText(d.getPreco_compra() + "");
                         String capa = filmedao.recuperarCapaFilme(txtTitulo.getText());
                         int idFilme = filmedao.recuperarIdFilme(txtTitulo.getText());
                         recuperarDadosFilme(idFilme);
@@ -599,6 +602,14 @@ public class ControleLocacao extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtIdClienteKeyPressed
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        atualizarData();
+        atualizarComboBox();
+
+        String nomeCliente = jCNomeCliente.getSelectedItem().toString();
+        idCliente = clientedao.retornarIdClinte(nomeCliente);
+    }//GEN-LAST:event_formWindowOpened
+
     /**
      * @param args the command line arguments
      */
@@ -681,15 +692,9 @@ public class ControleLocacao extends javax.swing.JFrame {
     public void atualizarData() {
         Date date = new Date();
         SimpleDateFormat data = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat hora = new SimpleDateFormat("hh:mm");
+        SimpleDateFormat hora = new SimpleDateFormat("HH:mm");
         txtHoras.setText(hora.format(date));
         jFDataLocacao.setText(data.format(date));
-    }
-
-    public void setCapaPadrao() {
-        ImageIcon icone = new javax.swing.ImageIcon(getClass().getResource("/Icons/logodvd.png"));
-        lbCapa.setIcon(new ImageIcon(icone.getImage().getScaledInstance(lbCapa.getWidth(),
-                lbCapa.getHeight(), Image.SCALE_DEFAULT)));
     }
 
     public void atualizarCapaFilme(String nomeCapa) {
@@ -721,7 +726,8 @@ public class ControleLocacao extends javax.swing.JFrame {
     }
 
     public void atualizarComboBox() {
-        for (Cliente c : clientedao.listarNomeClientes()) {
+        String sql = "SELECT idcliente, nome FROM cliente";
+        for (Cliente c : clientedao.listarNomeClientes(sql)) {
             jCNomeCliente.addItem(c.getNome());
         }
     }
