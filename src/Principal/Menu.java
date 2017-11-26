@@ -1,5 +1,6 @@
 package Principal;
 
+import DAO.AluguelDAO;
 import Locacao.*;
 import Modelo.Funcionario;
 import javax.swing.Box;
@@ -8,8 +9,14 @@ import Visao.Cadastrar.*;
 import Visao.Consultar.*;
 import Visao.Alterar.*;
 import Visao.Excluir.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 public class Menu extends javax.swing.JFrame {
+
+    AluguelDAO alugueldao = new AluguelDAO();
 
     public Menu() {
         initComponents();
@@ -524,6 +531,13 @@ public class Menu extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         Funcionario func = new Funcionario();
         itemUser.setText(Login.userLogado.nome);
+        
+        String dataAtual = capturarDataAtual();
+        int totalDevolucoes = alugueldao.verificarTotalDevolucoes(dataAtual);
+        
+        ImageIcon icone = new javax.swing.ImageIcon(getClass().getResource("/Icons/notification.png")); 
+        JOptionPane.showMessageDialog(null, "Devoluções para hoje: " + totalDevolucoes, "PTQX Locadora",
+                JOptionPane.PLAIN_MESSAGE, icone);
     }//GEN-LAST:event_formWindowOpened
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -606,4 +620,11 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
+
+    public String capturarDataAtual() {
+        Date date = new Date();
+        SimpleDateFormat data = new SimpleDateFormat("dd/MM/yyyy");
+        return data.format(date);
+    }
+
 }

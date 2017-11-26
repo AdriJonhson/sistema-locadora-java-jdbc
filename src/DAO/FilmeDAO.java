@@ -196,7 +196,8 @@ public class FilmeDAO {
         ResultSet rs = null;
 
         try {
-            stmt = con.prepareStatement("SELECT idfilme, titulo FROM filme");
+            stmt = con.prepareStatement("SELECT f.titulo, f.idfilme FROM filme as f WHERE f.idfilme\n"
+                    + "NOT IN(SELECT d.idfilme FROM dvd as d)");
             rs = stmt.executeQuery();
 
             if (rs != null) {
@@ -205,7 +206,7 @@ public class FilmeDAO {
                     Filme filme = new Filme();
 
                     filme.setIdFilme(rs.getInt("idfilme"));
-                    filme.setTitulo(rs.getString("titulo"));
+                    filme.setTitulo(rs.getString("f.titulo"));
                     lista.add(filme);
                 }
 

@@ -229,4 +229,28 @@ public class AluguelDAO {
 
     }
 
+    //Verifica quantas devoluções tem para hoje
+    public int verificarTotalDevolucoes(String dataAtual) {
+        int total = 0;
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = con.prepareStatement("SELECT COUNT(idaluguel) as total FROM aluguel"
+                    + " WHERE data_devolucao = ?");
+            stmt.setString(1, dataAtual);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                total = rs.getInt("total");
+            }
+        } catch (SQLException ex) {
+            System.err.println("AluguelDAO: " + ex);
+        } finally {
+
+        }
+        return total;
+    }
+
 }

@@ -4,12 +4,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Familia/Documents/git/sistema-locadora-java-jdbc/src/Locacao/ConsultaDevolucao.java</file>
-            <file>file:/C:/Users/Familia/Documents/git/sistema-locadora-java-jdbc/src/DAO/AluguelDAO.java</file>
-            <file>file:/C:/Users/Familia/Documents/git/sistema-locadora-java-jdbc/src/DAO/DVDDAO.java</file>
-            <file>file:/C:/Users/Familia/Documents/git/sistema-locadora-java-jdbc/src/Locacao/ControleLocacao.java</file>
-            <file>file:/C:/Users/Familia/Documents/git/sistema-locadora-java-jdbc/src/DAO/FilmeDAO.java</file>
-            <file>file:/C:/Users/Familia/Documents/git/sistema-locadora-java-jdbc/src/Locacao/EfetuarDevolucao.java</file>
+            <file>file:/C:/Users/Familia/Documents/git/sistema-locadora-java-jdbc/src/Visao/Consultar/ConsultarFuncionario.java</file>
+            <file>file:/C:/Users/Familia/Documents/git/sistema-locadora-java-jdbc/src/DAO/FuncionarioDAO.java</file>
         </group>
     </open-files>
 </project-private>

@@ -198,7 +198,7 @@ public class CadastrarDVD extends javax.swing.JFrame {
         });
 
         txSituacao.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        txSituacao.setText("Disponivel");
+        txSituacao.setText("Disponível");
         txSituacao.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
